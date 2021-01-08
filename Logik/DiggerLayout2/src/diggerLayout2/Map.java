@@ -34,7 +34,7 @@ import javax.swing.Timer;
  *
  * @author Aldemashki
  */
-public class Map extends JPanel implements KeyListener , ActionListener {
+public class Map extends  JPanel implements KeyListener , ActionListener {
     
     private Dimension d;
     
@@ -53,9 +53,9 @@ public class Map extends JPanel implements KeyListener , ActionListener {
     
     private boolean dying = false;
     
-    private final int BlOCK_SIZE = 43;
+    private final int BlOCK_SIZE = 20;
     
-    private final int N_BLOCK = 15;
+    private final int N_BLOCK = 30;
     
     private final int SCREEN_SIZE = N_BLOCK * BlOCK_SIZE;
     
@@ -78,10 +78,10 @@ public class Map extends JPanel implements KeyListener , ActionListener {
     private int Diggerleft , score;
     
     private int [] dx , dy;
-    private int Hobbinsx =600 , Hobbinsy=10;
+    private int Hobbinsx =500 , Hobbinsy=10;
     private int [] HobbinsX , HobbinsY , HobbinsDX , HobbinsDY , HobbinsSpeed;
     
-    private int DiggerX = 480, DiggerY = 530, DiggerDX , DiggerDY;
+    private int DiggerX = 480, DiggerY = 520, DiggerDX , DiggerDY;
     
     private int reqDX , reqDY , viewDX ,viewDY;
     
@@ -91,26 +91,46 @@ public class Map extends JPanel implements KeyListener , ActionListener {
     
     private int currentSpeed = 4;
     
+    private int posx;
+    private int posy;
+    
 
     
     private final int levelData[][]= {
     
     
-    {0,1,0,0,0,0,0,0,0,0,0,1,1,1,1},
-    {0,1,0,0,0,0,0,0,0,0,0,1,0,0,0},
-    {0,1,0,0,0,0,0,2,2,0,0,1,0,0,0},
-    {0,1,0,0,0,0,0,2,2,0,0,1,0,0,0},
-    {0,1,0,0,0,0,0,2,2,0,0,1,2,2,0},
-    {0,1,0,0,0,0,0,2,2,0,0,1,2,2,0},
-    {0,1,0,0,0,0,0,0,0,0,0,1,2,2,0},
-    {0,1,0,0,0,0,0,0,0,0,0,1,2,2,0},
-    {0,1,0,0,0,0,0,0,0,0,0,1,0,0,0},
-    {0,1,0,0,0,0,0,0,0,0,0,1,0,0,0},
-    {0,1,1,1,1,1,1,0,0,0,0,1,0,0,0},
-    {0,0,2,2,0,0,1,0,0,0,0,1,0,0,0},
-    {0,0,2,2,0,0,1,0,0,0,0,1,0,0,0},
-    {0,0,0,0,0,0,1,1,1,1,1,1,0,0,0},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,1,1,1,1},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,1,1,1,1},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,2,2,0,1,1,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,2,2,0,1,1,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,2,2,0,1,1,2,2,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,2,2,0,1,1,2,2,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,1,2,2,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,1,2,2,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,1,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,1,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,1,1,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,0,0,1,0,0,0,1,1,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,0,0,1,0,0,0,1,1,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+    
+    
     };
     
     private int[] [] screendata ;
@@ -156,9 +176,9 @@ public class Map extends JPanel implements KeyListener , ActionListener {
     
     private void initVariables(){
 
-       screendata= new int[15][15];
+       screendata= new int[30][30];
         mapColor = new Color (0,0,0);
-        d = new Dimension (645 , 645);
+        d = new Dimension (600 , 600);
         HobbinsX = new int [MaxHobbins];
         HobbinsY = new int [MaxHobbins];
         HobbinsDX = new int [MaxHobbins];
@@ -197,8 +217,8 @@ public class Map extends JPanel implements KeyListener , ActionListener {
     
     private void initLevel(){
         int i,j;
-        for(i=0; i<15; i++){
-         for(j=0; j<15;j++)
+        for(i=0; i<30; i++){
+         for(j=0; j<30;j++)
          {
          screendata[i][j] = levelData[i][j];
          }
@@ -207,13 +227,13 @@ public class Map extends JPanel implements KeyListener , ActionListener {
             
     }
     
-    private void drawMap(Graphics2D g2d){
+   private void drawMap(Graphics2D g2d){
         
     drawHobbins(g2d);
     int i = 0, j=0;
     int x=0, y=0 ;
-   for(i =0; i<15;i++ ){
-   for(j=0; j<15;j++){
+   for(i =0; i<30;i++ ){
+   for(j=0; j<30;j++){
    
    
    
@@ -224,16 +244,17 @@ public class Map extends JPanel implements KeyListener , ActionListener {
     }
     if(screendata[i][j]==2){
         g2d.setColor(emeColor);
-        g2d.fillOval(x+11, y+11, 20, 20);
+        g2d.fillOval(x+11, y+11, 10, 10);
     }
   
-    x +=43;
+    x +=20;
     }
     x=0;
-    y +=43;
+    y +=20;
     }
     
     }
+    
     
     public void drawscore(Graphics g)
     {
@@ -253,7 +274,7 @@ public class Map extends JPanel implements KeyListener , ActionListener {
      super.paintComponents(g);
      doDrawing(g);
      }
-     
+    
      private void doDrawing(Graphics g){
      Graphics2D g2d = (Graphics2D) g;
      g2d.setColor(Color.orange);
@@ -272,17 +293,17 @@ public class Map extends JPanel implements KeyListener , ActionListener {
      	private void drawDigger(Graphics2D g2d) {
 		
             g2d.setColor(Color.BLUE);
-            g2d.fillOval(DiggerX , DiggerY , 20, 20);
+            g2d.fillRect(DiggerX , DiggerY , 20, 20);
 		}
         
         private void drawHobbins(Graphics2D g2d) {
             
 		g2d.setColor(Color.RED);
-		g2d.fillOval(Hobbinsx, Hobbinsy, 20, 20);
+		g2d.fillOval(Hobbinsx, Hobbinsy, 10, 10);
 	}
         
       private void moveHobbins(Graphics2D g2d) {
-        if(screendata[Hobbinsy/43][(Hobbinsx)/43] == 1){
+        if(screendata[Hobbinsy/20][(Hobbinsx)/20] == 1){
                
                    int random;
                    random = (int)(Math.random()*(currentSpeed + 1));
@@ -362,15 +383,28 @@ public class Map extends JPanel implements KeyListener , ActionListener {
 
     @Override
     public void keyPressed(KeyEvent ke) {
-        
+        if(DiggerX%20==0)
+        {
+            posx=DiggerX/20;
+        }else
+        {
+          posx =(DiggerX/20)+1;
+        }
+           if(DiggerY%20==0)
+        {
+            posy=DiggerY/20;
+        }else
+        {
+          posy =(DiggerY/20)+1;
+        }
         
         
              
-   if(screendata[DiggerY/43][DiggerX/43]==2){
+   if(screendata[posy][posx]==2){
        score +=5;
-    screendata[DiggerY/43][DiggerX/43]=1;
+    screendata[posy][posx]=1;
     }else
-       screendata[DiggerY/43][DiggerX/43]=1;
+       screendata[posy][posx]=1;
        
         
         
@@ -378,8 +412,8 @@ public class Map extends JPanel implements KeyListener , ActionListener {
          
         
     if (ke.getKeyCode() == KeyEvent.VK_RIGHT){
-    if(DiggerX >= 629){
-    DiggerX = 629;
+    if(DiggerX >= 575){
+    DiggerX = 575;
     }
     else {
     moveRight();
@@ -402,8 +436,8 @@ public class Map extends JPanel implements KeyListener , ActionListener {
     }
     }
     if (ke.getKeyCode() == KeyEvent.VK_DOWN){
-    if(DiggerY >= 600){
-    DiggerY = 600;
+    if(DiggerY >= 540){
+    DiggerY = 540;
     }
     else {
     moveDown();
@@ -414,24 +448,24 @@ public class Map extends JPanel implements KeyListener , ActionListener {
     public void moveRight(){
    
     inGame = true;
-    DiggerX += 5;
+    DiggerX += 20;
     
     }
     public void moveLeft(){
  ;
     inGame = true;
-    DiggerX -= 5;
+    DiggerX -= 20;
     }
     public void moveUp(){
  
     inGame = true;
-    DiggerY -= 5;
+    DiggerY -= 20;
   
     }
     public void moveDown(){
 
     inGame = true;
-    DiggerY += 5;
+    DiggerY += 20;
     }
 
     @Override
