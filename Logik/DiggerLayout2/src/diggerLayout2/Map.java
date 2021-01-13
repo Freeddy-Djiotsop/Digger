@@ -5,477 +5,489 @@
  */
 package diggerLayout2;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Event;
-import java.awt.Font;
 
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.io.File;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-/*import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;*/
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.animation.*;
+import javafx.animation.AnimationTimer;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
+import javafx.scene.input.KeyEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.util.Duration;
+import javafx.scene.text.Text;
 
 
-import javax.swing.JPanel;
-import javax.swing.Timer;
-
-/**
- *
- * @author Aldemashki
- */
-public class Map extends  JPanel implements KeyListener , ActionListener {
+public class Map implements EventHandler<KeyEvent> {        //EventHandler<KeyEvent> wie KeyListenr in swing für Tastatur Eingabe
     
-    private Dimension d;
-    
-    
-    
-    
-    private final Font smallFont = new Font("Helvetica",Font.BOLD,14);
-    
-    private Image ii;
-    
-    private final Color emeColor = new Color (192,192,0);
-    
-    private Color mapColor;
+    private Dimension d;                                   // Für die Background color in unserem Fall orange gehe zur  Zeile 200 (d.height, d.width )                            
     
     private boolean inGame = false;
-    
-    private boolean dying = false;
-    
-    private final int BlOCK_SIZE = 20;
-    
-    private final int N_BLOCK = 30;
-    
-    private final int SCREEN_SIZE = N_BLOCK * BlOCK_SIZE;
-    
-    private final int DiggerAnimDelay = 2;
-    
-    private final int DiggerAnimCount = 4;
-    
-    private final int MaxHobbins = 12;
-    
-    private final int DiggerSpeed = 6;
-    
-    private int Digger_Anim_Count = DiggerAnimDelay;
-    
-    private int DiggerAnimDir = 1;
-    
-    private int DiggerAnimPos = 0;
-    
-    private int N_Hobbins = 6;
-    
-    private int Diggerleft , score;
-    
-    private int [] dx , dy;
-    private int Hobbinsx =500 , Hobbinsy=10;
-    private int [] HobbinsX , HobbinsY , HobbinsDX , HobbinsDY , HobbinsSpeed;
-    
-    private int DiggerX = 480, DiggerY = 520, DiggerDX , DiggerDY;
-    
-    private int reqDX , reqDY , viewDX ,viewDY;
-    
-    private final int validSpeed[] = {1,2,3,4,6,8};
-    
-    private final int maxSpeed = 6;
-    
-    private int currentSpeed = 4;
-    
-    private int posx;
-    private int posy;
-    
-
-    
-    private final int levelData[][]= {
-    
-    
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,1,1,1,1},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,1,1,1,1},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,2,2,0,1,1,0,0,0},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,2,2,0,1,1,0,0,0},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,2,2,0,1,1,2,2,0},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,2,2,0,1,1,2,2,0},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,1,2,2,0},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,1,2,2,0},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,1,0,0,0},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,1,0,0,0},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,1,1,0,0,0},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,0,0,1,0,0,0,1,1,0,0,0},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,0,0,1,0,0,0,1,1,0,0,0},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0},
-    {0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0},
-    {0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0},
-    {0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0},
+    private final int BlOCK_SIZE = 20;                   // wir haben die App. Fenster in BLocken geteilt hier entspricht das die Länge der Block in x,y Achse 
+    private final int N_BLOCK = 30;                      // Anzahl die Blocken
+    private final int SCREEN_SIZE = N_BLOCK * BlOCK_SIZE;// Fenster Größe entspricht Block_size mal Die Anzahl der Blocken
+    private int  score;                  
+  
+    private int Hobbinsxx[]={500,500,500};               // Die Hobbins Position auf x Achse und hier als Array,da wir haben mehrer Hobbins
+    private int Hobbinsyy[] ={10,10,10};                 // Die Hobbins Position auf y Achse und hier als Array,da wir haben mehrer Hobbins
+    private int DiggerX = 100, DiggerY = 100;            // Digger positon auf x und y Achse Am Anfang
+    private int currentSpeed = 4;                        // Geschwindigkeit der Hobbins
+    private final int levelData[][]= {                   //  Matrix für die Karte Erstellung : 1 entspricht schwarz ,2 entpsricht Grün (Emeralds),0 Orange
+    {0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1},
+    {0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1},
+    {0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0},
+    {0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0},
+    {0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,2,2,0,0,0,0,0,0,1,1,0,0,0,0,0},
+    {0,0,0,0,1,1,0,0,2,0,0,0,0,0,0,2,2,0,0,0,0,0,0,1,1,0,0,0,0,0},
+    {0,0,0,0,1,1,0,0,2,2,0,0,0,0,0,2,2,0,0,0,0,0,0,1,1,0,2,2,0,0},
+    {0,0,0,0,1,1,0,0,2,2,0,0,0,0,0,2,2,0,0,0,0,0,0,1,1,0,2,2,0,0},
+    {0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,2,2,0,0},
+    {0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,2,2,0,0},
+    {0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0},
+    {0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0},
+    {0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0},
+    {0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0},
+    {0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0},
+    {0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0},
+    {0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0},
+    {0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0},
+    {0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0},
+    {0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0},
+    {0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0},
+    {0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0},
+    {0,0,0,0,0,0,2,2,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0},
+    {0,0,0,0,0,0,2,2,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0},
     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-    
-    
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
     };
     
-    private int[] [] screendata ;
+  
     
-    private Timer timer;
+    private int[] [] screendata ;
+    // wenn wir mehrere Karten bzw. Level erstellen möchten , dann brauchen wir diese Matrix  aber zurzeit ist screendata gleich LevelData
+    
+    public Canvas canvas = new Canvas(600, 600); 
+    public GraphicsContext gc = canvas.getGraphicsContext2D();
+    Group root = new Group();
+    public Scene s= new Scene(root);
+    private int dyingnr=0; // versuch Zählen
+    
     
    
-
     
-    public Map(){
-        initVariables();
-        initBoard();
+    AnimationTimer timer = new AnimationTimer() {  // Timer
+        @Override
+        public void handle(long now) {
+       
+          
+           /* if(Hobbinsx>DiggerX)
+            Hobbinsx -= 20;
+            else if(Hobbinsx<DiggerX)
+            Hobbinsx += 20;
+            else if(Hobbinsy>DiggerY)
+            Hobbinsy -= 20;
+            else if(Hobbinsy<DiggerY)
+            Hobbinsy += 20;
+            drawMap(gc);*/
+            moveHobbins(gc);
+           
+            
+                   }
+    };
+    
+    private int x=0;  //Zähler, wird diese In timeline genutzt also im Respawn()
+    private Text text= new Text();
+    private Timeline timeline;
+   
+    
+    
+    public Map(){   // konstruktur
+    
+        initVariables();  // intialsieren von Vari.
+        initLevel();      // intialisieren von Level , diese ist wichtig wenn wir mehrere Karten erstellen wollen
+        drawMap(gc);      // wie paint in javaSwing , um die karte vorzustellen 
+        respawn();        // zeit verschiebung  zwischen Hobbins respawn 
+         
+        //s steht für Scene und diese Funktion ist für Tastatur eingabe zuständig
+        s.setOnKeyPressed((KeyEvent event) -> {
+            
+            switch (event.getCode()) {
+                case UP:{ 
+                            if(DiggerY <= 0){
+                            DiggerY = 0;
+                            break;
+                            }
+                            else{
+                            DiggerY -=5;
+                            break;
+                            }
+                }
+                case DOWN:{
+                            if(DiggerY >= 580){
+                            DiggerY = 580;
+                            break;
+                            }
+                            else{
+                            DiggerY +=5;
+                            break;
+                            }
+                }
+                case LEFT:{
+                            if(DiggerX <= 0){
+                            DiggerX = 0;
+                            break;
+                            }
+                            else{
+                            DiggerX -=5;
+                            break;
+                            }
+                }
+                case RIGHT:{ 
+                            if(DiggerX >= 580){
+                            DiggerX = 580;
+                            break;
+                            }
+                            else{
+                            DiggerX +=5;
+                            break;
+                            }
+                }
+            }
+            if(screendata[DiggerY/20][DiggerX/20] ==2){ // hier bedeutet wenn Digger Emeraldsstelle eintrifft,dann erhöhe die Score
+            
+                score +=50;
+            }
+            screendata[DiggerY/20][DiggerX/20]=1; // Digger lässt in seiner Stelle Schwarze Weg
+            
+            
+            drawMap(gc); // wird nochmal die karte ausdruckt nach jede Bewegung von Digger, ist untershiedlich von Swing. in swing steht die Methode repaint()
+        });
+      
+       
+        timer.start();
+       
+       
     }
     
-    public void playMusic(String musicLocation) {
-		
-		try {
-			
-			File musicPath = new File(musicLocation);
-			if(musicPath.exists()) {
-				AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicPath);
-				Clip clip = AudioSystem.getClip();
-				clip.open(audioInput);
-				clip.start();
-				clip.loop(Clip.LOOP_CONTINUOUSLY);
-			} else {
-				System.out.println("Cannot find the Audio File");
-			}
-		} catch (Exception ex)
-		{
-			ex.printStackTrace();
-		}
-	}
     
-    private void initBoard(){
-        addKeyListener(this);
-        setFocusTraversalKeysEnabled(false);
-        //addKeyListener(new TAdapter());/
-        setFocusable(true);
-        setBackground(Color.orange);
-
-    }
     
     private void initVariables(){
-
-       screendata= new int[30][30];
-        mapColor = new Color (0,0,0);
-        d = new Dimension (600 , 600);
-        HobbinsX = new int [MaxHobbins];
-        HobbinsY = new int [MaxHobbins];
-        HobbinsDX = new int [MaxHobbins];
-        HobbinsDY = new int [MaxHobbins];
-        HobbinsSpeed = new int [MaxHobbins];
-        dx = new int[4];
-        dy = new int [4];
-        timer = new Timer(40,this);
-        timer.start();
-        
-
-    }
-    
-    @Override 
-    public void addNotify(){
-        super.addNotify();
-        initGame();
-    }
-    
-    private void playgame(Graphics2D g2d){
-    //moveDigger();//
-    drawDigger(g2d);
-    drawHobbins(g2d);
-    moveHobbins(g2d);
-    
-    
-    }
-    
-    private void initGame(){
-        Diggerleft = 3;
-        score = 0;
-        initLevel();
-        N_Hobbins = 6;
-        currentSpeed = 3;
-    }
-    
-    private void initLevel(){
-        int i,j;
-        for(i=0; i<30; i++){
-         for(j=0; j<30;j++)
-         {
-         screendata[i][j] = levelData[i][j];
-         }
-        }
-            
-            
-    }
-    
-   private void drawMap(Graphics2D g2d){
-        
-    drawHobbins(g2d);
-    int i = 0, j=0;
-    int x=0, y=0 ;
-   for(i =0; i<30;i++ ){
-   for(j=0; j<30;j++){
-   
-   
-   
-    
-    if(screendata[i][j] == 1){
-    g2d.setColor(Color.BLACK);
-    g2d.fillRect(x,y,BlOCK_SIZE,BlOCK_SIZE);
-    }
-    if(screendata[i][j]==2){
-        g2d.setColor(emeColor);
-        g2d.fillOval(x+11, y+11, 10, 10);
-    }
-  
-    x +=20;
-    }
-    x=0;
-    y +=20;
-    }
-    
-    }
-    
-    
-    public void drawscore(Graphics g)
-    {
-
-    
-    
-    g.setColor(Color.white);
-    g.setFont(new Font("areal", Font.PLAIN,20));
-    g.drawString("Score :"+ score, 10, 15);
-    
-    
-    }
-    
-    
-     @Override
-     public void paintComponent(Graphics g){
-     super.paintComponents(g);
-     doDrawing(g);
-     }
-    
-     private void doDrawing(Graphics g){
-     Graphics2D g2d = (Graphics2D) g;
-     g2d.setColor(Color.orange);
-     g2d.fillRect(0,0,d.width,d.height);
-     drawMap(g2d);
-     playgame(g2d);
-     drawscore(g);
-             
-          
-     
-     g2d.drawImage(ii,5,5,this);
-     Toolkit.getDefaultToolkit().sync();
-     g2d.dispose();
-     }
-
-     	private void drawDigger(Graphics2D g2d) {
-		
-            g2d.setColor(Color.BLUE);
-            g2d.fillRect(DiggerX , DiggerY , 20, 20);
-		}
-        
-        private void drawHobbins(Graphics2D g2d) {
-            
-		g2d.setColor(Color.RED);
-		g2d.fillOval(Hobbinsx, Hobbinsy, 10, 10);
-	}
-        
-      private void moveHobbins(Graphics2D g2d) {
-        if(screendata[Hobbinsy/20][(Hobbinsx)/20] == 1){
-               
-                   int random;
-                   random = (int)(Math.random()*(currentSpeed + 1));
-                   if(random>currentSpeed){
-                       random = currentSpeed;
-                       
-                   }
-                   
-                   if(Hobbinsx>DiggerX)
-                   {Hobbinsx -= random;
-                   }
-                   else if(Hobbinsx<DiggerX )
-                   Hobbinsx += random;
-                   else if(Hobbinsy>DiggerY)
-                   Hobbinsy -= random;
-                   else if(Hobbinsy<DiggerY)
-                  {Hobbinsy += random;
-                   }
-                   
-
-        
-
-      }
-      }
-		
-	
-        
-       
-        
-        /*       private void moveDigger() {
-        
-        int pos;
-        int ch;
-        
-        if(reqDX == -DiggerDX && reqDY == DiggerDY) {
-        DiggerDX = reqDX;
-        DiggerDY = reqDY;
-        viewDX = DiggerDX;
-        viewDY = DiggerDY;
-        
-        }
-        
-        if(DiggerX % BlOCK_SIZE == 0 && DiggerY % BlOCK_SIZE == 0) {
-        pos = DiggerX/BlOCK_SIZE + N_BLOCK*(int)(DiggerY/BlOCK_SIZE);
-        ch = screendata[pos];
-        
-        if (ch == 3) {
-        screendata[pos] = 0;
-        score++;
-        }
-        if(reqDX != 0 || reqDY != 0) {
-        if(!((reqDX == -1 && reqDY == 0 && ch == 0)
-        ||(reqDX == 1 && reqDY == 0 && ch == 0)
-        ||(reqDX == 0 && reqDY ==-1 && ch == 0)
-        ||(reqDX == 0 && reqDY == 1 && ch == 0 ))) {
-        DiggerX = reqDX;
-        DiggerY = reqDY;
-        viewDX = DiggerX;
-        viewDY = DiggerY;
-        }
-        
-        
-        }
-        DiggerX = DiggerX + DiggerSpeed*DiggerDX;
-        DiggerY = DiggerY + DiggerSpeed*DiggerDY;
-        
-        }
-        }
-        
-        */
-    
-    @Override
-    public void actionPerformed(ActionEvent ae) {
-        timer.start();
-        repaint();
-    }
-
-    @Override
-    public void keyPressed(KeyEvent ke) {
-        if(DiggerX%20==0)
-        {
-            posx=DiggerX/20;
-        }else
-        {
-          posx =(DiggerX/20)+1;
-        }
-           if(DiggerY%20==0)
-        {
-            posy=DiggerY/20;
-        }else
-        {
-          posy =(DiggerY/20)+1;
-        }
-        
-        
-             
-   if(screendata[posy][posx]==2){
-       score +=5;
-    screendata[posy][posx]=1;
-    }else
-       screendata[posy][posx]=1;
-       
-        
-        
-    
+        screendata= new int[30][30]; //wir haben 30 zeile und 30 spalte in der Karte d.h. , dass jede zeile hat 30 block,der Länge 20 ist und auch bei Spalten
+        d = new Dimension (600 , 600); // Größe der fenster 
+         
          
         
-    if (ke.getKeyCode() == KeyEvent.VK_RIGHT){
-    if(DiggerX >= 575){
-    DiggerX = 575;
+         
     }
-    else {
-    moveRight();
-    }
-    }
-    if (ke.getKeyCode() == KeyEvent.VK_LEFT){
-    if(DiggerX <= 0){
-    DiggerX = 0;
-    }
-    else {
-    moveLeft();
-    }
-    }
-    if (ke.getKeyCode() == KeyEvent.VK_UP){
-    if(DiggerY <= 0){
-    DiggerY = 0;
-    }
-    else {
-    moveUp();
-    }
-    }
-    if (ke.getKeyCode() == KeyEvent.VK_DOWN){
-    if(DiggerY >= 540){
-    DiggerY = 540;
-    }
-    else {
-    moveDown();
-    }
-    }
-     
-    }
-    public void moveRight(){
-   
-    inGame = true;
-    DiggerX += 20;
     
+    private void initLevel(){ //hier level in Screnndata inti.
+        int i,j;
+        for(i=0; i<30; i++){
+        for(j=0; j<30;j++)
+        {
+            screendata[i][j] = levelData[i][j];
+        }
+        }
     }
-    public void moveLeft(){
- ;
-    inGame = true;
-    DiggerX -= 20;
-    }
-    public void moveUp(){
- 
-    inGame = true;
-    DiggerY -= 20;
+   
+    private void drawMap(GraphicsContext gc){
+        if(dyingnr < 3)  //  die Versuche, wenn der spieler 3 Versuche verloren hat , dann gehe zu else in zeile 245 und druck schwarze Fenster(Gameover)
+        {
+            
   
-    }
-    public void moveDown(){
-
-    inGame = true;
-    DiggerY += 20;
-    }
-
-    @Override
-    public void keyTyped(KeyEvent ke) {
+    
+           
+            
+        gc.setFill(Color.ORANGE);
+        gc.fillRect(0, 0, d.height, d.width);
+        int i , j;
+        int x=0, y=0 ;
+        for(i =0; i<30;i++ ){
+            for(j=0; j<30;j++){
+                if(screendata[i][j] == 1){
+                    gc.setFill(Color.BLACK);
+                    gc.fillRect(x,y,BlOCK_SIZE,BlOCK_SIZE);
+                }
+                if(screendata[i][j]==2){
+                    gc.setFill(Color.GREEN);
+                    gc.fillOval(x+11, y+11, 10, 10);
+                }
+                x +=20;
+            }
+            x=0;
+            y +=20;
+        }
+        drawDigger(gc);
+        drawScore(gc);
+        for(int k =0; k<3;k++)
+        {
         
-    }
+           drawHobbins(gc,Hobbinsxx[k],Hobbinsyy[k]);
 
-    @Override
-    public void keyReleased(KeyEvent ke) {
+        
+
+        
+        
+   }
+        }else // wenn der Spieler 3 versuche verloren hat.
+        {
+             gc.setFill(Color.BLACK);
+             gc.fillRect(0, 0, d.height, d.width);
+                     }
+    }
+    
+    
+   private static void delay(int i){  // um delay (Verzögerung) zu erstellen
        
-    }
+        try {
+            Thread.sleep(i);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Map.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      
+   }
+    private void drawDigger(GraphicsContext gc) { //digger ausdrucken
+       
+        gc.setFill(Color.BLUE);
         
+        gc.fillRect(DiggerX, DiggerY, 20, 20);
+    }
+   
+    private void drawHobbins(GraphicsContext gc,int x , int y) { // Hobbins ausdrucken
+        
+        gc.setFill(Color.RED);
+        
+        gc.fillRect(x, y, 20, 20);
+    }
+    
+    
+    
+   /* Random rand = new Random();
+    private int xrand= rand.nextInt(4);
+    */
+    
+    
+      /*private void moveHobbins(GraphicsContext gc) {
+      /*
+      xrand=rand.nextInt(4);
+      
+      switch (xrand){
+      case 0:
+      { //go down
+      while(screendata[(Hobbinsyy[0]/20)+1][Hobbinsxx[0]/20]== 1){
+      {
+      
+      
+      Hobbinsyy[0] += 20;
+      drawHobbins(gc,Hobbinsxx[0],Hobbinsyy[0]);
+      drawMap(gc);
+      
+      
+      
+      
+      }
+      
+      }
+      break;
+      }
+      case 1:
+      { //gotop
+      while(screendata[(Hobbinsyy[0]/20)-1][Hobbinsxx[0]/20]== 1){
+      
+      
+      Hobbinsyy[0] -= 20;
+      drawHobbins(gc,Hobbinsxx[0],Hobbinsyy[0]);
+      drawMap(gc);
+      
+      
+      }
+      break;
+      }
+      case 2:
+      {  //goright
+      while(screendata[(Hobbinsyy[0]/20)][(Hobbinsxx[0]/20)+1]== 1){
+      Hobbinsxx[0] += 20;
+      drawHobbins(gc,Hobbinsxx[0],Hobbinsyy[0]);
+      drawMap(gc);
+      
+      }
+      break;
+      }
+      case 3:
+      { //goleft
+      while(screendata[(Hobbinsyy[0]/20)][(Hobbinsxx[0]/20)-1]== 1){
+      Hobbinsxx[0] -= 20;
+      drawHobbins(gc,Hobbinsxx[0],Hobbinsyy[0]);
+      drawMap(gc);
+      }
+      break;
+      }
+      
+      }
+      
+  }*/
+    
+  private void moveHobbins(GraphicsContext gc) {
+      
+     int i =0;
+      do{
+      
+      dying(); // Überprüfen ob das Digger Tot ist
+      
+      if(screendata[Hobbinsyy[i]/20][(Hobbinsxx[i])/20] == 1){ // dies bedeutet, überprüfen ob die nächste block für die Hobbins frei ist (also schwarz ist)
+      
+      int random;
+      random = (int)(Math.random()*(currentSpeed + 1));
+      if(random>currentSpeed){
+      random = currentSpeed;
+      
+      }
+      
+      ///////////////////////////////////////////////////////////////////////// erste Fall
+      if(Hobbinsxx[i]>DiggerX )
+      {
+      if(screendata[Hobbinsyy[i]/20][(Hobbinsxx[i] /20)-1]  == 1 ){
+      
+      Hobbinsxx[i] -= random;
+      
+      
+      
+      }else if(screendata[(Hobbinsyy[i]/20)+1][(Hobbinsxx[i] /20)]  == 1 ){
+      {
+      Hobbinsyy[i] +=random;
+      
+      }
+      
+      }
+      else if(screendata[(Hobbinsyy[i] /20)-1][Hobbinsxx[i] /20]  == 1) {
+      Hobbinsyy[i] -=random;
+      
+      }
+      
+      
+      drawMap(gc);
+      ////////////////////////////////////////////////////////////////////////////
+      }
+      /////////////////////////////////////////////////////////////////////////// zweite fall
+      else if(Hobbinsxx[i]<DiggerX ){
+      if( screendata[Hobbinsyy[i]/20][(Hobbinsxx[i] +random)/20]  == 1){
+      Hobbinsxx[i] += random;
+      delay(5);
+      }else if(screendata[(Hobbinsyy[i] - random)/20][Hobbinsxx[i] /20]  == 1){
+      Hobbinsyy[i] -=random;
+      delay(5);
+      }else if(screendata[(Hobbinsyy[i] +random)/20][Hobbinsxx[i] /20]  == 1) {
+      Hobbinsyy[i] +=random;
+      delay(5);
+      }
+      drawMap(gc);
+      }
+      ///////////////////////////////////////////////////////////////////////////// driite Fall
+      else if(Hobbinsyy[i]>DiggerY ){
+      if(screendata[(Hobbinsyy[i]-random)/20][Hobbinsxx[i]/20]  == 1){
+      
+      
+      Hobbinsyy[i] -= random;
+      delay(5);
+      }
+      else if(screendata[(Hobbinsyy[i] )/20][(Hobbinsxx[i]+ random) /20 ]  == 1){
+      Hobbinsxx[i] +=random;
+      delay(5);
+      }
+      else  {
+      Hobbinsxx[i] -=random;
+      delay(5);
+      }
+      drawMap(gc);
+      }
+      //////////////////////////////////////////////////////////////////////////// vierte Fall
+      else if(Hobbinsyy[i]<DiggerY ){
+      if( screendata[(Hobbinsyy[i]+random)/20][Hobbinsxx[i]/20]  == 1)
+      {
+      Hobbinsyy[i] += random;
+      delay(5);
+      }else if(screendata[(Hobbinsyy[i] )/20][(Hobbinsxx[i]- random) /20 ]  == 1){
+      Hobbinsxx[i] -=random;
+      delay(5);
+      } else {
+      Hobbinsxx[i] +=random;
+      delay(5);
+      }
+      
+      drawMap(gc);
+      }
+      /////////////////////////////////////////////////////
+      
+      
+      
+      }
+      i++; // erhöhe zähler für screendata index
+      
+      
+      } while(i<x); // x für anzahl der Hobbins 
+      
+  }
+
+      
+private void dying(){
+    
+    for(int i =0; i<Hobbinsxx.length;i++){
+if(Hobbinsxx[i]==DiggerX && Hobbinsyy[i]== DiggerY)
+{ dyingnr++;
+   
+     for(int j =0; j<Hobbinsxx.length;j++)
+     {
+         
+         Hobbinsxx[j]=500;
+         Hobbinsyy[j]=10;
+         respawn();
+     }
+     DiggerX=100;
+     DiggerY=100;
+     break;
 }
+    
+
+}
+}
+
+private void respawn(){
+ //respawn every 3 sec.
+ x=0;
+        
+         timeline = new Timeline(new KeyFrame(Duration.seconds(2), ev -> {
+        drawHobbins(gc,Hobbinsxx[x],Hobbinsyy[x]);
+        x++;
+        
+         }));
+        timeline.setCycleCount(3);//do it x times
+        timeline.setCycleCount(Animation.INDEFINITE);//or indefinitely
+
+        //play:
+        timeline.play();
+        
+///////////////////////////////////////////
+
+}
+public void drawScore(GraphicsContext gc)
+    {
+   
+    gc.strokeText("Score : " +score, 2, 10);
+    
+   }
+  
+    
+
+    @Override
+    public void handle(KeyEvent event) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    }
