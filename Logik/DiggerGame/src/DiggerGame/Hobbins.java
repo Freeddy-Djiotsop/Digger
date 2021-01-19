@@ -6,25 +6,28 @@
 package DiggerGame;
 
 
-
-
-
-
 /**
  *
  * @author Aldemashki
  */
-abstract public class Monster {
-    
-    public int [] monsterX = {780,780,780,780,780};
-    
-    public int [] monsterY = {20,20,20,20,20};
-    
+public class Hobbins extends Monster {
+
 
     
-    Monster(){}
  
 
-    
-   }
+}
 
+
+
+
+
+
+
+
+
+
+
+
+
+    
