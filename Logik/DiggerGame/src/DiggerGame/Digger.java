@@ -14,7 +14,7 @@ import javafx.scene.paint.Color;
  * @author Aldemashki
  */
 public class Digger {
-    public int diggerX = 80, diggerY = 80;
+    public int diggerX =400 , diggerY = 540;
     public int fireBallX=diggerX , fireBallY=diggerY ;
    
 

@@ -20,10 +20,9 @@ import javafx.util.Duration;
 public class Nobbins extends Monster {
     public boolean hobbinsOn = false;
     public Random random = new Random();
-    public Digger digger = new Digger();
     public int k=1;
     public Timeline timeline2 = new Timeline(new KeyFrame(Duration.seconds(10), ev -> { 
-      
+      if(k<5)
          k++;
        
          }));
@@ -36,101 +35,130 @@ public class Nobbins extends Monster {
     
     public void draw(GraphicsContext gc , int x , int y){
         gc.setFill(Color.RED);
-        if(k<5)
         gc.fillRect(x , y, 20, 20);
-        else{
-        gc.fillOval(x, y, 20, 20);
-        /*hobbinsOn = true;*/}
+      
     }
+    public boolean chase = false , matrix= true;
     
   
     
-     public void move(int[][]screenData){
-    timeline2.play();
-    for(int i = 0;i<k;i++){
+  public void move (int [][]screenData , Digger digger){
+   timeline2.play();
+      for(int i=0;i<k;i++)
+      {
+      
+        if(screenData[monsterY[i]/20][monsterX[i]/20] % 2 == 0 &&   matrix==false && chase == true){
+            System.out.println("chase");
+         chase= false;
+         if(digger.diggerX<monsterX[i] && screenData[monsterY[i]/20][Math.abs((monsterX[i]/20)-1)] % 2 == 0){
+             System.out.println("chase1");
+          monsterX[i] -=20;
+          chase = true;
+      }
+        if(digger.diggerX>monsterX[i] && screenData[monsterY[i]/20][Math.abs((monsterX[i]/20)+1)] % 2 == 0){
+            System.out.println("chase2");
+          monsterX[i] +=20;
+          chase =true;
+      } 
+         if(digger.diggerY>monsterY[i] && screenData[(monsterY[i]/20)+1][Math.abs((monsterX[i]/20))] % 2 == 0){
+             System.out.println("chase3");
+          monsterY[i] +=20;
+          chase =true;
+      } 
+         if(digger.diggerY<monsterY[i] && screenData[Math.abs((monsterY[i]/20)-1)][Math.abs((monsterX[i]/20))] % 2 == 0){
+             System.out.println("chase4");
+          monsterY[i] -=20;
+          chase = true;
+      }
+         if(chase == false && matrix == false){
+             matrix = true;
+         }
+         }
+       
         
-    if(monsterX[i]<=600 &&monsterY[i]<=600&& monsterX[i]>=0 && monsterY[i]>=20 && hobbinsOn == false) {
-    if((screenData [(monsterY[i]/20)][(monsterX[i]/20) - 1] == 2 
-       || screenData [(monsterY[i]/20) - 1][(monsterX[i]/20)] == 2 
-       || screenData [(monsterY[i]/20) + 1][(monsterX[i]/20)] == 2) && screenData [(monsterY[i]/20)][(monsterX[i]/20) - 1] != 3){
-    monsterX[i] -=20;
-    /*    System.out.print(screenData [monsterY[i]/20][monsterX[i]/20]);
-    System.out.println();*/
-    }
-    else if((screenData [(monsterY[i]/20)][(monsterX[i]/20) + 1] == 6 
-       || screenData [(monsterY[i]/20) - 1][(monsterX[i]/20)] == 6 
-       || screenData [(monsterY[i]/20) + 1][(monsterX[i]/20)] == 6) && screenData [(monsterY[i]/20)][(monsterX[i]/20) + 1] != 3){
-    monsterX[i] +=20;
-    /*    System.out.print(screenData [monsterY[i]/20][monsterX[i]/20]);
-    System.out.println();*/
-    }    
-    else if((screenData [(monsterY[i]/20)][(monsterX[i]/20) - 1] == 8 
-       || screenData [(monsterY[i]/20)][(monsterX[i]/20) + 1] == 8
-       || screenData [(monsterY[i]/20) - 1][(monsterX[i]/20)] == 8 )&& screenData [(monsterY[i]/20) - 1][(monsterX[i]/20)] != 3){
-    monsterY[i] -=20;
-    /*    System.out.print(screenData [monsterY[i]/20 - 1][monsterX[i]/20]);
-    System.out.println();*/
-    }    
-    else if((screenData [(monsterY[i]/20)][(monsterX[i]/20) - 1] == 4 
-       || screenData [(monsterY[i]/20)][(monsterX[i]/20) + 1] == 4
-       || screenData [(monsterY[i]/20) + 1][(monsterX[i]/20)] == 4)&& screenData [(monsterY[i]/20) + 1][(monsterX[i]/20)] != 3){
-    monsterY[i] +=20;
-    /*    System.out.print(screenData [monsterY[i]/20][monsterX[i]/20]);
-    System.out.println();*/
-    }
-    else if(screenData [(monsterY[i]/20)][(monsterX[i]/20)] == 4 && screenData [(monsterY[i]/20) + 1][(monsterX[i]/20)] == 2 ){
+        else{
+           
+           
+          if(matrix==true && chase == false )
+          { System.out.println("matrix");
+           matrix = false;
+          if(screenData[monsterY[i]/20][(Math.abs((monsterX[i]/20)-1))] == 2){
+              System.out.println("matrix1");
+          monsterX[i] -=20;
+          matrix = true;
+          }
+           if(screenData[monsterY[i]/20][(Math.abs((monsterX[i]/20)+1))] == 6){
+               System.out.println("matrix2");
+          monsterX[i] +=20;
+          matrix = true;
+          }
+            if(screenData[Math.abs((monsterY[i]/20)-1)][(monsterX[i]/20)] == 8){
+                System.out.println("matrix3");
+          monsterY[i] -=20;
+          matrix = true;
+          }
+      if(screenData[(monsterY[i]/20)+1][(monsterX[i]/20)] == 4){
+                 System.out.println("matrix4");
+          monsterY[i] +=20;
+          matrix = true;
+          }
+     if(screenData [(monsterY[i]/20)][(monsterX[i]/20)] == 4 && screenData [(monsterY[i]/20) + 1][(monsterX[i]/20)] == 2 ){
     monsterY[i] +=20;
     }
-    else if(screenData [(monsterY[i]/20)][(monsterX[i]/20)] == 4 && screenData [(monsterY[i]/20) + 1][(monsterX[i]/20)] == 6 ){
+     if(screenData [(monsterY[i]/20)][(monsterX[i]/20)] == 4 && screenData [(monsterY[i]/20) + 1][(monsterX[i]/20)] == 6 ){
     monsterY[i] +=20;
     }
-    else if(screenData [(monsterY[i]/20)][(monsterX[i]/20)] == 4 && screenData [(monsterY[i]/20) + 1][(monsterX[i]/20)] == 8 ){
+     if(screenData [(monsterY[i]/20)][(monsterX[i]/20)] == 4 && screenData [(monsterY[i]/20) + 1][(monsterX[i]/20)] == 8 ){
     monsterY[i] +=20;
     }    
-    else if(screenData [(monsterY[i]/20)][(monsterX[i]/20)] == 8 && screenData [(monsterY[i]/20) - 1][(monsterX[i]/20)] == 2 ){
+     if(screenData [(monsterY[i]/20)][(monsterX[i]/20)] == 8 && screenData [(monsterY[i]/20) - 1][(monsterX[i]/20)] == 2 ){
     monsterY[i] -=20;
     }
-    else if(screenData [(monsterY[i]/20)][(monsterX[i]/20)] == 8 && screenData [(monsterY[i]/20) - 1][(monsterX[i]/20)] == 6 ){
+     if(screenData [(monsterY[i]/20)][(monsterX[i]/20)] == 8 && screenData [(monsterY[i]/20) - 1][(monsterX[i]/20)] == 6 ){
     monsterY[i] -=20;
     }
-    else if(screenData [(monsterY[i]/20)][(monsterX[i]/20)] == 8 && screenData [(monsterY[i]/20) - 1][(monsterX[i]/20)] == 4 ){
+     if(screenData [(monsterY[i]/20)][(monsterX[i]/20)] == 8 && screenData [(monsterY[i]/20) - 1][(monsterX[i]/20)] == 4 ){
     monsterY[i] -=20;
     }
-    else if(screenData [(monsterY[i]/20)][(monsterX[i]/20)] == 2 && screenData [(monsterY[i]/20)][(monsterX[i]/20) - 1] == 8 ){
+     if(screenData [(monsterY[i]/20)][(monsterX[i]/20)] == 2 && screenData [(monsterY[i]/20)][(monsterX[i]/20) - 1] == 8 ){
     monsterX[i] -=20;
     }
-    else if(screenData [(monsterY[i]/20)][(monsterX[i]/20)] == 2 && screenData [(monsterY[i]/20)][(monsterX[i]/20) - 1] == 6 ){
+     if(screenData [(monsterY[i]/20)][(monsterX[i]/20)] == 2 && screenData [(monsterY[i]/20)][(monsterX[i]/20) - 1] == 6 ){
     monsterX[i] -=20;
     }
-    else if(screenData [(monsterY[i]/20)][(monsterX[i]/20)] == 2 && screenData [(monsterY[i]/20)][(monsterX[i]/20) - 1] == 4 ){
+     if(screenData [(monsterY[i]/20)][(monsterX[i]/20)] == 2 && screenData [(monsterY[i]/20)][(monsterX[i]/20) - 1] == 4 ){
     monsterX[i] -=20;
     }
-    else if(screenData [(monsterY[i]/20)][(monsterX[i]/20)] == 6 && screenData [(monsterY[i]/20)][(monsterX[i]/20) + 1] == 2 ){
+     if(screenData [(monsterY[i]/20)][(monsterX[i]/20)] == 6 && screenData [(monsterY[i]/20)][(monsterX[i]/20) + 1] == 2 ){
     monsterX[i] +=20;
     }
-    else if(screenData [(monsterY[i]/20)][(monsterX[i]/20)] == 6 && screenData [(monsterY[i]/20)][(monsterX[i]/20) + 1] == 4 ){
+     if(screenData [(monsterY[i]/20)][(monsterX[i]/20)] == 6 && screenData [(monsterY[i]/20)][(monsterX[i]/20) + 1] == 4 ){
     monsterX[i] +=20;
     }
-    else if(screenData [(monsterY[i]/20)][(monsterX[i]/20)] == 6 && screenData [(monsterY[i]/20)][(monsterX[i]/20) + 1] == 8 ){
+     if(screenData [(monsterY[i]/20)][(monsterX[i]/20)] == 6 && screenData [(monsterY[i]/20)][(monsterX[i]/20) + 1] == 8 ){
     monsterX[i] +=20;
-    }     
-    }
-    /*    else if (hobbinsOn == true){
-    if(digger.diggerX<monsterX[i]){
-    monsterX[i] -=20;
-    screenData [(monsterY[i]/20)][(monsterX[i]/20)] = 2;}
-    if(digger.diggerX>monsterX[i]){
-    monsterX[i] +=20;
-    screenData [(monsterY[i]/20)][(monsterX[i]/20)] = 6;}
-    if(digger.diggerY<monsterY[i]){
-    monsterY[i] -=20;
-    screenData [(monsterY[i]/20)][(monsterX[i]/20)] = 8;}
-    if(digger.diggerY<monsterY[i]){
-    monsterY[i] +=20;
-    screenData [(monsterY[i]/20)][(monsterX[i]/20)] = 4;}
-    }*/
-    }
-    }
+    }              
+             
+           
+          }else{
+              chase = true;
+              
+              
+                      }
+         
+        }
+         
+           
+         
+       
+         
+      }
+      
+      }
+  
+  
+  
+  }
 
  
-}
+

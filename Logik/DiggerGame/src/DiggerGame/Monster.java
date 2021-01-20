@@ -16,7 +16,7 @@ package DiggerGame;
  */
 abstract public class Monster {
     
-    public int [] monsterX = {580,580,580,580,580};
+    public int [] monsterX = {780,780,780,780,780};
     
     public int [] monsterY = {20,20,20,20,20};
     
