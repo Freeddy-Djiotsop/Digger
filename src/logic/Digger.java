@@ -135,14 +135,14 @@ public class Digger {
 			break;
 		}
 	}
-//	public void drawFireBall(GraphicsContext gc )
-//    {
-//     
-//        gc.setFill(Color.BLUE);
-//        gc.fillOval(fireBallX,fireBallY , 15, 15);
-//    
-//    
-//    }
+	public void drawFireBall(GraphicsContext gc )
+    {
+     
+        gc.setFill(Color.BLUE);
+        gc.fillOval(fireBallX,fireBallY , 15, 15);
+    
+    
+   }
 
 	public void draw(GraphicsContext gc) {
 //		gc.drawImage(new Image(getClass().getResourceAsStream("/digger/gui/extend/diggerChar.jpg")), diggerX, diggerY,
