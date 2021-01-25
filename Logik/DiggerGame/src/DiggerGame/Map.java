@@ -73,11 +73,22 @@ public class Map {
      public int dyingNr = 0;
      public boolean up=false,down=false,right=false,left=false ,active =false, killed=false ,go=true,move=false;
      public String dir ="l";
-     public Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(20), ev -> { // für fireball
+     public int fire = 1;
+     public int cherrie ;
+     public boolean cherrieRespawn = false;
+     public boolean monsterRespawnOn = true;
+     public boolean cherrieEat = false;
+     public boolean lastRound =false;
+     
+     public Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(7), ev -> { // für fireball
       
          go=true;
        
          }));
+     
+     
+
+
      
      
      
@@ -95,6 +106,7 @@ public class Map {
         drawMap(gc);
         diggerMove();
         timer.start();
+       
         
     
         
@@ -125,7 +137,7 @@ public class Map {
             
         gc.setFill(Color.ORANGE);
         gc.fillRect(0, 0, d.height, d.width);
-        int i , j;
+        int i= 0 , j = 0;
         int x=0, y=0 ;
         for(i =0; i<30;i++ ){
             for(j=0; j<40;j++){
@@ -137,22 +149,41 @@ public class Map {
                     gc.setFill(Color.GREEN);
                     gc.fillOval(x+11, y+11, 10, 10);
                 }
+
+  
                 x +=20;
             }
             x=0;
             y +=20;
         }
         
-      
+   
         digger.draw(gc);
+        if(fire == 0){
         digger.drawFireBall(gc);
         
-        
+        }
+        if(cherrie!=3){
+           
         for(int k = 0; k < 5; k++){
             
+           if(nobbins.hobbinsOn==false ) {
         nobbins.draw(gc , nobbins.monsterX[k] , nobbins.monsterY[k]);
-            }
+           }
+          if(nobbins.hobbinsOn == true ){
+           nobbins.draw2(gc, nobbins.monsterX[nobbins.rand], nobbins.monsterY[nobbins.rand]);
             
+           if(nobbins.rand != k){
+           nobbins.draw(gc , nobbins.monsterX[k] , nobbins.monsterY[k]);
+          
+          }
+          
+           
+           }
+            }
+        gc.setFill(Color.ORANGE);
+        gc.fillRect(0, 0, 20, 20);
+        }
         
         score.drawScore(gc);
         }
@@ -160,7 +191,47 @@ public class Map {
         {
        gc.setFill(Color.BLACK);
        gc.fillRect(0, 0, d.height, d.width);
-                     }
+        }
+        if(cherrie == 3 && cherrieEat == false){
+        
+        gc.setFill(Color.PINK);
+        gc.fillOval(750, 27, 10, 10); 
+        System.out.println("Here we are agaian");
+        nobbins.timeline2.stop();
+        }
+        if (digger.diggerX/20 == 37&& digger.diggerY/20 == 1 && cherrieEat == false){
+        gc.setFill(Color.BLACK);
+        gc.fillRect(740, 20, 20, 20);
+        digger.draw(gc);
+        score.score += 100;
+        cherrie =0;
+        cherrieEat = true;
+        
+        
+        }
+       if(cherrieRespawn == true){
+        gc.setFill(Color.BLACK);
+        gc.fillRect(740, 20, 20, 20);
+        
+        cherrie=0;
+        cherrieRespawn = false;
+        
+        
+                
+                }
+
+ 
+       
+     
+     
+        
+            
+        
+       
+        
+            
+
+            
     }
    
     public void diggerMove(){
@@ -188,10 +259,10 @@ public class Map {
                                  score.score +=50;
                                    }                            
                             screenData[digger.diggerY/20][digger.diggerX/20]=8; // Digger lässt in seiner Stelle Schwarze Weg
-                            for(int i = 0;i<30;i++){
+                            /*  for(int i = 0;i<30;i++){
                             for(int j = 0;j<30;j++)
                             System.out.print(screenData[i][j]);
-                            System.out.println();}                            
+                            System.out.println();}  */                          
                             break;
                             }
                 }
@@ -214,10 +285,10 @@ public class Map {
                                  score.score +=50;
                                    }
                             screenData[digger.diggerY/20][digger.diggerX/20]=4; // Digger lässt in seiner Stelle Schwarze Weg
-                            for(int i = 0;i<30;i++){
+                            /* for(int i = 0;i<30;i++){
                             for(int j = 0;j<30;j++)
                             System.out.print(screenData[i][j]);
-                            System.out.println();}                            
+                            System.out.println();} */                           
                             break;
                             }
                 }
@@ -240,10 +311,10 @@ public class Map {
                                 score.score +=50;
                                    }
                             screenData[digger.diggerY/20][digger.diggerX/20]=2; // Digger lässt in seiner Stelle Schwarze Weg
-                            for(int i = 0;i<30;i++){
+                            /*   for(int i = 0;i<30;i++){
                             for(int j = 0;j<30;j++)
                             System.out.print(screenData[i][j]);
-                            System.out.println();}                            
+                            System.out.println();}*/                            
                             break;
                             }
                 }
@@ -266,10 +337,10 @@ public class Map {
                                  score.score +=50;
                                    }
                             screenData[digger.diggerY/20][digger.diggerX/20]=6; // Digger lässt in seiner Stelle Schwarze Weg
-                            for(int i = 0;i<30;i++){
+                            /*     for(int i = 0;i<30;i++){
                             for(int j = 0;j<30;j++)
                             System.out.print(screenData[i][j]);
-                            System.out.println();}
+                            System.out.println();}*/
                             break;
                             }
                 }
@@ -290,6 +361,7 @@ public class Map {
             switch(event.getCode()) {
             
                 case SPACE:{
+                 fire = 0;
                  go = false;
                 active=true;
                             
@@ -337,6 +409,7 @@ public class Map {
             digger.fireBallX=digger.diggerX;
             active=false;
             dir="l";
+            fire = 1;
         }
         break;
         }
@@ -351,6 +424,7 @@ public class Map {
          digger.fireBallX=digger.diggerX;
          active=false;
             dir="l";
+            fire = 1;
         }
         break;
         }
@@ -364,6 +438,7 @@ public class Map {
           digger.fireBallX=digger.diggerX;
           active=false;
           dir="l";
+          fire = 1;
           }
         break;
         }
@@ -377,6 +452,7 @@ public class Map {
             digger.fireBallX=digger.diggerX;
             active=false;
             dir="l";
+            fire = 1;
             
             }
         break;
@@ -400,6 +476,7 @@ public class Map {
             dying();
             delay(100);
             drawMap(gc);
+           
           
           
    
@@ -417,10 +494,12 @@ public class Map {
    }
         
     private void dying(){
-    
+    if(cherrie!=3){
     for(int i =0; i<5;i++){
     if(Math.abs(nobbins.monsterX[i]-digger.diggerX)<20 && Math.abs(nobbins.monsterY[i]-digger.diggerY)<20)
-    { dyingNr++;
+    { 
+        dyingNr++;
+         cherrieRespawn = true;
    
      for(int j =0; j<5;j++)
      {
@@ -429,10 +508,10 @@ public class Map {
          nobbins.monsterY[j]=20;
 
      }
-     digger.diggerX=80;
-     digger.fireBallX=80;
-     digger.diggerY=80;
-     digger.fireBallY=80;
+     digger.diggerX=400;
+     digger.fireBallX=400;
+     digger.diggerY=540;
+     digger.fireBallY=540;
      nobbins.k=1;
      
 }
@@ -440,6 +519,7 @@ public class Map {
     
 
 }
+    }
 }
     
  private boolean killMonster(){
@@ -450,8 +530,25 @@ public class Map {
  {
  score.score +=50;
 
- nobbins.monsterX[i]= 580;
+ if(cherrie < 3){
+      cherrie++;
+   System.out.println(cherrie);
+   
+   }
+ 
+ if(cherrie != 3){
+ nobbins.monsterX[i]= 780;
  nobbins.monsterY[i] =20;
+  monsterRespawnOn = true;
+ }
+
+else{  
+     
+  nobbins.monsterX[i]= 0;
+ nobbins.monsterY[i] =0;
+
+
+} 
  
  
  return true;
@@ -470,7 +567,6 @@ public class Map {
  return false;
  
  }
- 
 
  
    

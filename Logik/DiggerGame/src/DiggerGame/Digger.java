@@ -31,7 +31,7 @@ public class Digger {
     public void drawFireBall(GraphicsContext gc )
     {
      
-        gc.setFill(Color.BLUE);
+        gc.setFill(Color.ORANGE);
         gc.fillOval(fireBallX,fireBallY , 15, 15);
     
     

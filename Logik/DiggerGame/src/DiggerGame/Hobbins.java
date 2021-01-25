@@ -12,10 +12,6 @@ package DiggerGame;
  */
 public class Hobbins extends Monster {
 
-
-    
- 
-
 }
 
 
