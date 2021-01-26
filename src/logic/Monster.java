@@ -6,6 +6,8 @@ abstract public class Monster {
     
     public int [] monsterY = {20,20,20,20,20};
     
+    public int maxMonsterNumber = 3;
+    
 
     
     Monster(){}

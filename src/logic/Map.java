@@ -84,7 +84,7 @@ public class Map {
      public boolean cherrieEat = false;
      public boolean lastRound =false;
      
-     public Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(7), ev -> { // für fireball
+     public Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), ev -> { // für fireball
       
          go=true;
        
@@ -168,9 +168,9 @@ public class Map {
         digger.drawFireBall(gc);
         
         }
-        if(cherrie!=3){
+      
            
-        for(int k = 0; k < 5; k++){
+        for(int k = 0; k < nobbins.maxMonsterNumber; k++){
             
            if(nobbins.hobbinsOn==false ) {
         nobbins.draw(gc , nobbins.monsterX[k] , nobbins.monsterY[k]);
@@ -186,9 +186,11 @@ public class Map {
            
            }
             }
-        gc.setFill(Color.ORANGE);
-        gc.fillRect(0, 0, 20, 20);
-        }
+        gc.drawImage(new Image(getClass().getResourceAsStream("/digger/gui/extend/backgroundLevel01.jpg")), 0, 0,
+					20, 20);
+        /*     gc.setFill(Color.ORANGE);
+        gc.fillRect(0, 0, 20, 20);*/
+       
         
         score.drawScore(gc);
         }
@@ -500,7 +502,7 @@ public class Map {
         
     private void dying(){
     if(cherrie!=3){
-    for(int i =0; i<5;i++){
+    for(int i =0; i<nobbins.maxMonsterNumber;i++){
     if(Math.abs(nobbins.monsterX[i]-digger.diggerX)<20 && Math.abs(nobbins.monsterY[i]-digger.diggerY)<20)
     { 
         dyingNr++;
@@ -529,7 +531,7 @@ public class Map {
     
  private boolean killMonster(){
     
-     for(int i=0 ; i<5;i++){
+     for(int i=0 ; i<nobbins.maxMonsterNumber;i++){
         
  if(Math.abs(digger.fireBallX - nobbins.monsterX[i])<30 && Math.abs(digger.fireBallY - nobbins.monsterY[i])<30)
  {
