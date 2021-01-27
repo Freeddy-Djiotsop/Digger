@@ -1,4 +1,5 @@
 package digger.logic;
+
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -33,9 +34,12 @@ public class Digger {
 	Image digLeft5;
 	Image digLeft6;
 	Image currentImageOfDigLeft;
+	Image currentImageOfDig;
+	
+	String dir = "UP";
 
 	public int diggerX = 400, diggerY = 540;
-	public int fireBallX=diggerX , fireBallY=diggerY ;
+	public int fireBallX = diggerX, fireBallY = diggerY;
 
 	public Digger() {
 		digUp1 = new Image(this.getClass().getResourceAsStream("/digger/gui/extend/DigUp1.jpg"));
@@ -59,80 +63,179 @@ public class Digger {
 		digRight5 = new Image(this.getClass().getResourceAsStream("/digger/gui/extend/DigRight5.jpg"));
 		digRight6 = new Image(this.getClass().getResourceAsStream("/digger/gui/extend/DigRight6.jpg"));
 		currentImageOfDigRight = digRight1;
-
+		digLeft1 = new Image(this.getClass().getResourceAsStream("/digger/gui/extend/DigLeft1.jpg"));
+		digLeft2 = new Image(this.getClass().getResourceAsStream("/digger/gui/extend/DigLeft2.jpg"));
+		digLeft3 = new Image(this.getClass().getResourceAsStream("/digger/gui/extend/DigLeft3.jpg"));
+		digLeft4 = new Image(this.getClass().getResourceAsStream("/digger/gui/extend/DigLeft4.jpg"));
+		digLeft5 = new Image(this.getClass().getResourceAsStream("/digger/gui/extend/DigLeft5.jpg"));
+		digLeft6 = new Image(this.getClass().getResourceAsStream("/digger/gui/extend/DigLeft6.jpg"));
+		currentImageOfDigLeft = digLeft1;
+		currentImageOfDig = currentImageOfDigUp; 
 
 	}
+	
+	public void setDir(String _dir) {
+		dir = _dir;
+	}
 
+	
+	
 	private void setImageUp() {
 		if (currentImageOfDigUp.equals(digUp1)) {
 			currentImageOfDigUp = digUp2;
+			currentImageOfDig = currentImageOfDigUp;
+//			System.out.println("Chaning Image to up2");
 			return;
 		}
 		if (currentImageOfDigUp.equals(digUp2)) {
 			currentImageOfDigUp = digUp3;
+			currentImageOfDig = currentImageOfDigUp;
 			return;
 		}
 		if (currentImageOfDigUp.equals(digUp3)) {
 			currentImageOfDigUp = digUp4;
+			currentImageOfDig = currentImageOfDigUp;
 			return;
 		}
 		if (currentImageOfDigUp.equals(digUp4)) {
 			currentImageOfDigUp = digUp5;
+			currentImageOfDig = currentImageOfDigUp;
 			return;
 		}
 		if (currentImageOfDigUp.equals(digUp5)) {
 			currentImageOfDigUp = digUp6;
+			currentImageOfDig = currentImageOfDigUp;
 			return;
 		}
 		if (currentImageOfDigUp.equals(digUp6)) {
 			currentImageOfDigUp = digUp1;
+			currentImageOfDig = currentImageOfDigUp;
 			return;
 		}
+	
 	}
 
 	private void setImageDown() {
 		if (currentImageOfDigDown.equals(digDown1)) {
 			currentImageOfDigDown = digDown2;
+			currentImageOfDig = currentImageOfDigDown;
 			return;
 		}
 		if (currentImageOfDigDown.equals(digDown2)) {
 			currentImageOfDigDown = digDown3;
+			currentImageOfDig = currentImageOfDigDown;
 			return;
 		}
 		if (currentImageOfDigDown.equals(digDown3)) {
 			currentImageOfDigDown = digDown4;
+			currentImageOfDig = currentImageOfDigDown;
 			return;
 		}
 		if (currentImageOfDigDown.equals(digDown4)) {
 			currentImageOfDigDown = digDown5;
+			currentImageOfDig = currentImageOfDigDown;
 			return;
 		}
 		if (currentImageOfDigDown.equals(digDown5)) {
 			currentImageOfDigDown = digDown6;
+			currentImageOfDig = currentImageOfDigDown;
 			return;
 		}
 		if (currentImageOfDigDown.equals(digDown6)) {
 			currentImageOfDigDown = digDown1;
+			currentImageOfDig = currentImageOfDigDown;
+			return;
+		}
+		
+	}
+
+	private void setImageRight() {
+		if (currentImageOfDigRight.equals(digRight1)) {
+			currentImageOfDigRight = digRight2;
+			currentImageOfDig = currentImageOfDigRight;
+			return;
+		}
+		if (currentImageOfDigRight.equals(digRight2)) {
+			currentImageOfDigRight = digRight3;
+			currentImageOfDig = currentImageOfDigRight;
+			return;
+		}
+		if (currentImageOfDigRight.equals(digRight3)) {
+			currentImageOfDigRight = digRight4;
+			currentImageOfDig = currentImageOfDigRight;
+			return;
+		}
+		if (currentImageOfDigRight.equals(digRight4)) {
+			currentImageOfDigRight = digRight5;
+			currentImageOfDig = currentImageOfDigRight;
+			return;
+		}
+		if (currentImageOfDigRight.equals(digRight5)) {
+			currentImageOfDigRight = digRight6;
+			currentImageOfDig = currentImageOfDigRight;
+			return;
+		}
+		if (currentImageOfDigRight.equals(digRight6)) {
+			currentImageOfDigRight = digRight1;
+			currentImageOfDig = currentImageOfDigRight;
 			return;
 		}
 	}
 
-	public void changeImage(GraphicsContext gc, String direction) {
+	private void setImageLeft() {
+
+		if (currentImageOfDigLeft.equals(digLeft1)) {
+			currentImageOfDigLeft = digLeft2;
+			currentImageOfDig = currentImageOfDigLeft;
+			return;
+		}
+		if (currentImageOfDigLeft.equals(digLeft2)) {
+			currentImageOfDigLeft = digLeft3;
+			currentImageOfDig = currentImageOfDigLeft;
+			return;
+		}
+		if (currentImageOfDigLeft.equals(digLeft3)) {
+			currentImageOfDigLeft = digLeft4;
+			currentImageOfDig = currentImageOfDigLeft;
+			return;
+		}
+		if (currentImageOfDigLeft.equals(digLeft4)) {
+			currentImageOfDigLeft = digLeft5;
+			currentImageOfDig = currentImageOfDigLeft;
+			return;
+		}
+		if (currentImageOfDigLeft.equals(digLeft5)) {
+			currentImageOfDigLeft = digLeft6;
+			currentImageOfDig = currentImageOfDigLeft;
+			return;
+		}
+		if (currentImageOfDigLeft.equals(digLeft6)) {
+			currentImageOfDigLeft = digLeft1;
+			currentImageOfDig = currentImageOfDigLeft;
+			return;
+		}
+	}
+
+	public void changeImage(String direction) {
 		switch (direction) {
 		case "UP":
-			
-			gc.drawImage(currentImageOfDigUp, diggerX, diggerY, 20, 20);
+//			currentImageOfDig = digUp1;
 			setImageUp();
+//			System.out.println("Changing Image to UP");
 			break;
-		case "BOT":
-			
-			gc.drawImage(currentImageOfDigDown, diggerX, diggerY, 20, 20);
+		case "DOWN":
+//			currentImageOfDig = digDown1;
 			setImageDown();
 			break;
-		case "Right":
+		case "RIGHT":
+//			currentImageOfDig = digRight1;
+			setImageRight();
 			break;
-		case "Left":
+		case "LEFT":
+//			currentImageOfDig = digLeft1;
+			setImageLeft();
 			break;
+
 		}
 	}
 	public void drawFireBall(GraphicsContext gc )
@@ -142,21 +245,18 @@ public class Digger {
         gc.fillOval(fireBallX,fireBallY , 15, 15);
     
     
-   }
+    }
 
 	public void draw(GraphicsContext gc) {
+		
+//		changeImage(dir);
 //		gc.drawImage(new Image(getClass().getResourceAsStream("/digger/gui/extend/diggerChar.jpg")), diggerX, diggerY,
 //				20, 20);
-		gc.drawImage(currentImageOfDigUp, diggerX, diggerY, 20, 20);
+			gc.drawImage(currentImageOfDig, diggerX, diggerY, 30, 30);
+
 	}
-//	public void drawDigUP(GraphicsContext gc) {
-////		gc.setFill(Color.BLUE);
-////		gc.fillRect(diggerX, diggerY, 20, 20);
-//		gc.drawImage(currentImageOfDigUp, diggerX, diggerY, 20, 20);
-//		
-//	}
-//	public void drawDigDown(GraphicsContext gc) {		
-//		gc.drawImage(currentImageOfDigDown, diggerX, diggerY, 20, 20);
+//	public void drawDead(GraphicsContext gc) {
+//		gc.drawImage(new Image(getClass().getResourceAsStream("/digger/gui/extend/DeadDig.jpg")), diggerX, diggerY, 30, 30);
 //
 //	}
 }
