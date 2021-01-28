@@ -11,24 +11,24 @@ public class Nobbins extends Monster {
 
 	public int k = 1;
 	public Random random = new Random();
-	public int rand = 6;
+	public int rand = 4;
 
-	public Timeline timeline2 = new Timeline(new KeyFrame(Duration.seconds(10), ev -> {
-		if (k < 5)
+	public Timeline timeline2 = new Timeline(new KeyFrame(Duration.seconds(15), ev -> {
+		if (k < maxMonsterNumber)
 			k++;
 
 	}));
 	public boolean hobbinsOn = false;
-	public Timeline timeline3 = new Timeline(new KeyFrame(Duration.seconds(4), ev -> {
+	public Timeline timeline3 = new Timeline(new KeyFrame(Duration.seconds(10), ev -> {
 		hobbinsOn = true;
 		rand = random.nextInt(k);
 
 	}));
 
-	public Timeline timeline4 = new Timeline(new KeyFrame(Duration.seconds(5), ev -> {
+	public Timeline timeline4 = new Timeline(new KeyFrame(Duration.seconds(15), ev -> {
 		timeline3.stop();
 		hobbinsOn = false;
-		rand = 6;
+		rand = 4;
 
 	}));
 
@@ -175,6 +175,7 @@ public class Nobbins extends Monster {
 	public void draw(GraphicsContext gc, int x, int y) {
 
 //		gc.setFill(Color.RED);
+		changeNobbinsImage();
 		gc.drawImage(currentImageOfNobbin, x, y, 30, 30);
 //		gc.fillRect(x, y, 20, 20);
 
@@ -314,23 +315,28 @@ public class Nobbins extends Monster {
 				}
 
 			} else {
+				if (monsterX[rand] == 0 && monsterY[rand] == 0)
+			    {
+			      monsterX[rand] = 0; 
+			      monsterY[rand] = 0;
+			    }   
 
-				if (digger.diggerX < monsterX[rand]) {
-					screenData[monsterY[rand] / 20][(monsterX[rand] / 20)] = 2;
+				else if (digger.diggerX < monsterX[rand]) {
+					screenData[monsterY[rand] / 20][(monsterX[rand] / 20)] = 6;
 					monsterX[rand] -= 20;
 					changeHobImage("Left");
 
 				} else if (digger.diggerX > monsterX[rand]) {
-					screenData[monsterY[rand] / 20][(monsterX[rand] / 20)] = 6;
+					screenData[monsterY[rand] / 20][(monsterX[rand] / 20)] = 2;
 					monsterX[rand] += 20;
 					changeHobImage("Right");
 
 				} else if (digger.diggerY > monsterY[rand]) {
-					screenData[monsterY[rand] / 20][(monsterX[rand] / 20)] = 8;
+					screenData[monsterY[rand] / 20][(monsterX[rand] / 20)] = 4;
 					monsterY[rand] += 20;
 
 				} else if (digger.diggerY < monsterY[rand]) {
-					screenData[monsterY[rand] / 20][(monsterX[rand] / 20)] = 4;
+					screenData[monsterY[rand] / 20][(monsterX[rand] / 20)] = 8;
 					monsterY[rand] -= 20;
 
 				}

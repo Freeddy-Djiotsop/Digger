@@ -28,66 +28,36 @@ public class Map {
 	private final int nBlock = 40;
 	private final int screenSize = nBlock * blockSize;
 	private final int levelData[][] = {
-			{ 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
-					3, 3, 3, 3, 3 },
-			{ 3, 3, 3, 3, 8, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2,
-					2, 2, 2, 2, 2 },
-			{ 3, 3, 3, 3, 8, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 3, 3, 3, 3, 3,
-					3, 3, 3, 3, 3 },
-			{ 3, 3, 3, 3, 8, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 3, 3, 3, 3, 3,
-					3, 3, 3, 3, 3 },
-			{ 3, 3, 3, 3, 8, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 5, 3, 5, 3, 3, 3, 3, 3, 3, 3, 4, 3, 3, 3, 3, 3,
-					3, 3, 3, 3, 3 },
-			{ 3, 3, 3, 3, 8, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 3, 3, 3, 3, 3,
-					3, 3, 3, 3, 3 },
-			{ 3, 3, 3, 3, 8, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 5, 3, 5, 3, 3, 3, 3, 3, 3, 3, 4, 3, 3, 3, 3, 3,
-					3, 3, 3, 3, 3 },
-			{ 3, 3, 3, 3, 8, 3, 3, 3, 5, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 3, 3, 3, 3, 5,
-					3, 5, 3, 3, 3 },
-			{ 3, 3, 3, 3, 8, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 5, 3, 5, 3, 3, 3, 3, 3, 3, 3, 4, 3, 3, 3, 3, 3,
-					3, 3, 3, 3, 3 },
-			{ 3, 3, 3, 3, 8, 3, 3, 3, 5, 3, 5, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 3, 3, 3, 3, 5,
-					3, 5, 3, 3, 3 },
-			{ 3, 3, 3, 3, 8, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 5, 3, 5, 3, 3, 3, 3, 3, 3, 3, 4, 3, 3, 3, 3, 3,
-					3, 3, 3, 3, 3 },
-			{ 3, 3, 3, 3, 8, 3, 3, 3, 5, 3, 5, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 3, 3, 3, 3, 5,
-					3, 5, 3, 3, 3 },
-			{ 3, 3, 3, 3, 8, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 3, 3, 3, 3, 3,
-					3, 3, 3, 3, 3 },
-			{ 3, 3, 3, 3, 8, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 3, 3, 3, 3, 5,
-					3, 5, 3, 3, 3 },
-			{ 3, 3, 3, 3, 8, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 3, 3, 3, 3, 3,
-					3, 3, 3, 3, 3 },
-			{ 3, 3, 3, 3, 8, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 3, 3, 3, 3, 3,
-					3, 3, 3, 3, 3 },
-			{ 3, 3, 3, 3, 8, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 3, 3, 3, 3, 3,
-					3, 3, 3, 3, 3 },
-			{ 3, 3, 3, 3, 8, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 3, 3, 3, 3, 3,
-					3, 3, 3, 3, 3 },
-			{ 3, 3, 3, 3, 8, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 3, 3, 3, 3, 3,
-					3, 3, 3, 3, 3 },
-			{ 3, 3, 3, 3, 8, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 3, 3, 3, 3, 3,
-					3, 3, 3, 3, 3 },
-			{ 3, 3, 3, 3, 8, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 3, 3, 3, 3, 3,
-					3, 3, 3, 3, 3 },
-			{ 3, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 3, 3, 3, 3, 3,
-					3, 3, 3, 3, 3 },
-			{ 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 8, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 3, 3, 3, 3, 3,
-					3, 3, 3, 3, 3 },
-			{ 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 8, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 3, 3, 3, 3, 3,
-					3, 3, 3, 3, 3 },
-			{ 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 8, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 3, 3, 3, 3, 3,
-					3, 3, 3, 3, 3 },
-			{ 3, 3, 3, 3, 5, 3, 5, 3, 3, 3, 8, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 3, 3, 3, 3, 3,
-					3, 3, 3, 3, 3 },
-			{ 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 8, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 3, 3, 3, 3, 3,
-					3, 3, 3, 3, 3 },
-			{ 3, 3, 3, 3, 5, 3, 5, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 3, 3, 3, 3, 3,
-					3, 3, 3, 3, 3 },
-			{ 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
-					3, 3, 3, 3, 3 },
-			{ 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
-					3, 3, 3, 3, 3 }, };
+			 {3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3},
+			    {3,3,3,3,8,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,2,2,2,2,2,2,2,2,2,2},
+			    {3,3,3,3,8,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,3,3,3,3,3,3,3,3,3,3},
+			    {3,3,3,3,8,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,49,3,3,3,3,3,3,3,4,3,3,3,3,3,3,3,3,3,3},
+			    {3,3,3,3,8,3,3,3,3,3,3,3,3,3,3,3,3,3,3,5,3,5,3,3,3,3,3,3,3,4,3,3,3,3,3,3,3,3,3,3},
+			    {3,3,3,3,8,3,3,3,7,3,21,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,3,3,77,3,3,3,3,3,3,3},
+			    {3,3,3,3,8,3,3,3,3,3,3,3,3,3,3,3,3,3,3,5,3,5,3,3,3,3,3,3,3,4,3,3,3,3,3,3,3,3,3,3},
+			    {3,3,3,3,8,3,3,3,5,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,3,3,3,3,5,3,5,3,3,3},
+			    {3,3,3,3,8,3,3,3,3,3,3,3,3,3,3,3,3,3,3,5,3,5,3,3,3,3,3,3,3,4,3,3,3,3,3,3,3,3,3,3},
+			    {3,3,3,3,8,3,3,3,5,3,5,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,3,3,3,3,5,3,5,3,3,3},
+			    {3,3,3,3,8,3,3,3,3,3,3,3,3,3,3,3,3,3,3,5,3,5,3,3,3,3,3,3,3,4,3,3,3,3,3,3,3,3,3,3},
+			    {3,3,3,3,8,3,3,3,5,3,5,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,3,3,3,3,5,3,5,3,3,3},
+			    {3,3,3,3,8,3,3,3,3,3,3,3,3,3,3,3,3,35,3,3,3,3,3,3,3,3,3,3,3,4,3,3,3,3,3,3,3,3,3,3},
+			    {3,3,3,3,8,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,3,3,3,3,5,3,5,3,3,3},
+			    {3,3,3,3,8,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,3,3,3,3,3,3,3,3,3,3},
+			    {3,3,3,3,8,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,3,3,3,3,3,3,3,3,3,3},
+			    {3,3,3,3,8,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,3,3,3,3,3,3,3,3,3,3},
+			    {3,3,3,3,8,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,3,3,3,3,3,3,3,3,3,3},
+			    {3,3,3,3,8,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,3,3,3,3,3,3,3,3,3,3},
+			    {3,3,3,3,8,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,3,3,3,3,3,3,3,3,3,3},
+			    {3,3,3,3,8,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,3,3,3,3,3,3,3,3,3,3},
+			    {3,3,3,3,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,3,3,3,3,3,3,3,3,3,3},
+			    {3,3,3,3,3,3,3,3,3,3,8,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,3,3,3,3,3,3,3,3,3,3},
+			    {3,3,3,3,3,3,3,3,3,3,8,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,3,3,3,3,3,3,3,3,3,3},
+			    {3,3,3,3,3,3,3,3,3,3,8,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,3,3,3,3,3,3,3,3,3,3},
+			    {3,3,3,3,5,3,5,3,3,3,8,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,3,3,3,3,3,3,3,3,3,3},
+			    {3,3,3,3,3,3,3,3,3,3,8,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,3,3,3,3,3,3,3,3,3,3},
+			    {3,3,3,3,5,3,5,3,3,3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4,3,3,3,3,3,3,3,3,3,3},
+			    {3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3},
+			    {3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3}, };
 	public int[][] screenData;
 	public int dyingNr = 0;
 	public boolean up = false, down = false, right = false, left = false, active = false, killed = false, go = true,
@@ -100,7 +70,7 @@ public class Map {
 	public boolean cherrieEat = false;
 	public boolean lastRound = false;
 
-	public Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(7), ev -> { // für fireball
+	public Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), ev -> { // für fireball
 
 		go = true;
 
@@ -112,7 +82,7 @@ public class Map {
 		initLevel();
 		drawMap(gc);
 		diggerMove();
-		timer.start();
+//		timer.start();
 
 	}
 
@@ -149,9 +119,28 @@ public class Map {
 					if (screenData[i][j] == 5) {
 //						gc.setFill(Color.GREEN);
 						gc.drawImage(new Image(getClass().getResourceAsStream("/digger/gui/extend/emerald.jpg")),
-								x + 11, y + 11, 30, 30);
+								x + 11, y + 11, 20, 20);
 //						gc.fillOval(x + 11, y + 11, 10, 10);
 					}
+					
+					   if(screenData[i][j]%7==0)
+                       {
+						   gc.drawImage(new Image(getClass().getResourceAsStream("/digger/gui/extend/goldtransp.png")),
+									x , y , 20, 20);
+//                           gc.setFill(Color.PINK);
+//                           gc.fillOval(x, y, 20, 20);
+
+                       }
+                        if(screenData[i][j] %9 ==0)
+                        {
+                        	
+                        	gc.drawImage(new Image(getClass().getResourceAsStream("/digger/gui/extend/Gold3.jpg")),
+    								x , y , 20, 20);
+//                            gc.setFill(Color.PINK);
+//                            gc.fillOval(x, y, 10, 20);
+
+                        }
+                        
 					x += 20;
 				}
 				x = 0;
@@ -163,9 +152,7 @@ public class Map {
 				digger.drawFireBall(gc);
 
 			}
-			if (cherrie != 3) {
-
-				for (int k = 0; k < 5; k++) {
+				for (int k = 0; k < nobbins.maxMonsterNumber; k++) {
 
 					if (nobbins.hobbinsOn == false) {
 						nobbins.draw(gc, nobbins.monsterX[k], nobbins.monsterY[k]);
@@ -180,9 +167,8 @@ public class Map {
 
 					}
 				}
-				gc.setFill(Color.ORANGE);
-				gc.fillRect(0, 0, 20, 20);
-			}
+//				gc.setFill(Color.ORANGE);
+//				gc.fillRect(0, 0, 20, 20);
 
 			score.drawScore(gc);
 			gc.drawImage(new Image(getClass().getResourceAsStream("/digger/gui/extend/Level01.jpg")), 350, 1, 100, 20);
@@ -208,10 +194,11 @@ public class Map {
 
 		if (cherrie == 3 && cherrieEat == false) {
 
-			gc.setFill(Color.PINK);
-			gc.fillOval(750, 27, 10, 10);
-			System.out.println("Here we are agaian");
-			nobbins.timeline2.stop();
+//			gc.setFill(Color.PINK);
+//			gc.fillOval(750, 27, 10, 10);
+			gc.drawImage(new Image(getClass().getResourceAsStream("/digger/gui/extend/Cherry.jpg")), 750, 27, 20, 20);
+//			System.out.println("Here we are agaian");
+			nobbins.timeline2.pause();
 		}
 		if (digger.diggerX / 20 == 37 && digger.diggerY / 20 == 1 && cherrieEat == false) {
 			gc.setFill(Color.BLACK);
@@ -250,8 +237,16 @@ public class Map {
 						digger.fireBallY = digger.diggerY;
 
 					break;
-				} else {
+				} else{
+                    if(screenData[((digger.diggerY/20)-1)][digger.diggerX/20]%7 ==0 )
+                    {
+                        
+                        digger.diggerY=digger.diggerY;
+                    
+                    }
+				else {
 					digger.diggerY -= 20;
+				}
 					if (active == false)
 						digger.fireBallY = digger.diggerY;
 					if (screenData[digger.diggerY / 20][digger.diggerX / 20] == 5) { // hier bedeutet wenn Digger
@@ -262,10 +257,7 @@ public class Map {
 					}
 					screenData[digger.diggerY / 20][digger.diggerX / 20] = 8; // Digger lässt in seiner Stelle Schwarze
 																				// Weg
-					/*
-					 * for(int i = 0;i<30;i++){ for(int j = 0;j<30;j++)
-					 * System.out.print(screenData[i][j]); System.out.println();}
-					 */
+				
 					break;
 				}
 			}
@@ -280,8 +272,15 @@ public class Map {
 					if (active == false)
 						digger.fireBallY = digger.diggerY;
 					break;
-				} else {
+				} else{
+                    if(screenData[((digger.diggerY/20)+1)][digger.diggerX/20]%7 ==0  )
+                   {
+                       digger.diggerY=digger.diggerY;
+                   
+                   }
+				else {
 					digger.diggerY += 20;
+				}
 					if (active == false)
 						digger.fireBallY = digger.diggerY;
 					if (screenData[digger.diggerY / 20][digger.diggerX / 20] == 5) { // hier bedeutet wenn Digger
@@ -292,10 +291,7 @@ public class Map {
 					}
 					screenData[digger.diggerY / 20][digger.diggerX / 20] = 4; // Digger lässt in seiner Stelle Schwarze
 																				// Weg
-					/*
-					 * for(int i = 0;i<30;i++){ for(int j = 0;j<30;j++)
-					 * System.out.print(screenData[i][j]); System.out.println();}
-					 */
+			
 					break;
 				}
 			}
@@ -311,7 +307,54 @@ public class Map {
 						digger.fireBallX = digger.diggerX;
 					break;
 				} else {
-					digger.diggerX -= 20;
+					if(screenData[digger.diggerY/20][(digger.diggerX/20)-1]%7==0)
+                    {
+                    if(screenData[digger.diggerY/20][(digger.diggerX/20)-1]==7 && screenData[digger.diggerY/20][(digger.diggerX/20)-2]%7!=0)
+                    {
+                        
+                        digger.diggerX -=20;
+                        screenData[digger.diggerY/20][(digger.diggerX/20)-1]=7;
+                        }
+                    else if(screenData[digger.diggerY/20][(digger.diggerX/20)-1]==21 && screenData[digger.diggerY/20][(digger.diggerX/20)-2]%7!=0)
+                    {
+                        
+                        digger.diggerX -=20;
+                        screenData[digger.diggerY/20][(digger.diggerX/20)-1]=21;
+                        }
+                     else if(screenData[digger.diggerY/20][(digger.diggerX/20)-1]==35 && screenData[digger.diggerY/20][(digger.diggerX/20)-2]%7!=0)
+                    {
+                        
+                        digger.diggerX -=20;
+                        screenData[digger.diggerY/20][(digger.diggerX/20)-1]=35;
+                        }
+                       else if(screenData[digger.diggerY/20][(digger.diggerX/20)-1]==49 && screenData[digger.diggerY/20][(digger.diggerX/20)-2]%7!=0)
+                    {
+                        
+                        digger.diggerX -=20;
+                        screenData[digger.diggerY/20][(digger.diggerX/20)-1]=49;
+                        }
+                       
+                           else if(screenData[digger.diggerY/20][(digger.diggerX/20)-1]==77 && screenData[digger.diggerY/20][(digger.diggerX/20)-2]%7!=0)
+                    {
+                        
+                        digger.diggerX -=20;
+                        screenData[digger.diggerY/20][(digger.diggerX/20)-1]=77;
+                        }
+                     
+                      else if(screenData[digger.diggerY/20][(digger.diggerX/20)-1]==21 && screenData[digger.diggerY/20][(digger.diggerX/20)-2]==7)
+                    {
+                        
+                        digger.diggerX -=20;
+                        screenData[digger.diggerY/20][(digger.diggerX/20)-1]=21;
+                        screenData[digger.diggerY/20][(digger.diggerX/20)-2]=7;
+                        }
+                     
+                     
+                    }
+                    else
+                    {
+                   digger.diggerX -=20;
+                    }
 					if (active == false)
 						digger.fireBallX = digger.diggerX;
 					if (screenData[digger.diggerY / 20][digger.diggerX / 20] == 5) { // hier bedeutet wenn Digger
@@ -341,17 +384,70 @@ public class Map {
 						digger.fireBallX = digger.diggerX;
 					break;
 				} else {
-					digger.diggerX += 20;
-					if (active == false)
-						digger.fireBallX = digger.diggerX;
-					if (screenData[digger.diggerY / 20][digger.diggerX / 20] == 5) { // hier bedeutet wenn Digger
-																						// Emeraldsstelle eintrifft,dann
-																						// erhöhe die Score
+//					digger.diggerX += 20;
+//					if (active == false)
+//						digger.fireBallX = digger.diggerX;
+//					if (screenData[digger.diggerY / 20][digger.diggerX / 20] == 5) { // hier bedeutet wenn Digger
+//																						// Emeraldsstelle eintrifft,dann
+//																						// erhöhe die Score
+//
+//						score.score += 50;
+//					}
+//					screenData[digger.diggerY / 20][digger.diggerX / 20] = 6; // Digger lässt in seiner Stelle Schwarze
+					if(screenData[digger.diggerY/20][(digger.diggerX/20)+1]%7==0)
+                    {
+                 if(screenData[digger.diggerY/20][(digger.diggerX/20)+1]==7  &&  screenData[digger.diggerY/20][(digger.diggerX/20)+2]%7!=0)
+                 {
+                     
+                     digger.diggerX +=20;
+                     screenData[digger.diggerY/20][(digger.diggerX/20)+1]=7;
+                     }
+                 else if(screenData[digger.diggerY/20][(digger.diggerX/20)+1]==21 &&  screenData[digger.diggerY/20][(digger.diggerX/20)+2]%7!=0)
+                 {
+                     
+                     digger.diggerX +=20;
+                     screenData[digger.diggerY/20][(digger.diggerX/20)+1]=21;
+                     }
+                  
+                   else  if(screenData[digger.diggerY/20][(digger.diggerX/20)+1]==7 &&  screenData[digger.diggerY/20][(digger.diggerX/20)+2]==21)
+                 {
+                     
+                     digger.diggerX +=20;
+                     screenData[digger.diggerY/20][(digger.diggerX/20)+2]=21;
+                     screenData[digger.diggerY/20][(digger.diggerX/20)+1]=7;
+                     }
+                  else if(screenData[digger.diggerY/20][(digger.diggerX/20)+1]==35 &&  screenData[digger.diggerY/20][(digger.diggerX/20)+2]%7!=0)
+                 {
+                     
+                     digger.diggerX +=20;
+                     screenData[digger.diggerY/20][(digger.diggerX/20)+1]=35;
+                     }
+                  else if(screenData[digger.diggerY/20][(digger.diggerX/20)+1]==49 &&  screenData[digger.diggerY/20][(digger.diggerX/20)+2]%7!=0)
+                 {
+                     
+                     digger.diggerX +=20;
+                     screenData[digger.diggerY/20][(digger.diggerX/20)+1]=49;
+                     }
+                 else if(screenData[digger.diggerY/20][(digger.diggerX/20)+1]==77 &&  screenData[digger.diggerY/20][(digger.diggerX/20)+2]%7!=0)
+                 {
+                     
+                     digger.diggerX +=20;
+                     screenData[digger.diggerY/20][(digger.diggerX/20)+1]=77;
+                     }
+                    }
+                 
+                 else
+                 {
+                digger.diggerX +=20;
+                 }
+                if(active==false)
+                digger.fireBallX=digger.diggerX;
+                if(screenData[digger.diggerY/20][digger.diggerX/20] ==5){ // hier bedeutet wenn Digger Emeraldsstelle eintrifft,dann erhähe die Score
 
-						score.score += 50;
-					}
-					screenData[digger.diggerY / 20][digger.diggerX / 20] = 6; // Digger lässt in seiner Stelle Schwarze
-																				// Weg
+                    score.score +=50;
+                       }
+                screenData[digger.diggerY/20][digger.diggerX/20]=2; // Digger lässt in seiner Stelle Schwarze Weg
+                                          															// Weg
 					/*
 					 * for(int i = 0;i<30;i++){ for(int j = 0;j<30;j++)
 					 * System.out.print(screenData[i][j]); System.out.println();}
@@ -465,10 +561,16 @@ public class Map {
 
 	}
 
-	AnimationTimer timer = new AnimationTimer() { // Timer
+	 public AnimationTimer timer = new AnimationTimer() { // Timer
 		@Override
 		public void handle(long now) {
 
+			goldNuggetGoDown1();
+            goldNuggetGoDown2();
+            goldNuggetGoDown3();
+            goldNuggetGoDown4();
+            goldNuggetGoDown5();
+            
 			fireBallMove(gc);
 			nobbins.move(screenData, digger);
 			dying();
@@ -489,14 +591,14 @@ public class Map {
 	}
 
 	private void dying() {
-		if (cherrie != 3) {
-			for (int i = 0; i < 5; i++) {
-				if (Math.abs(nobbins.monsterX[i] - digger.diggerX) < 20
-						&& Math.abs(nobbins.monsterY[i] - digger.diggerY) < 20) {
+			for (int i = 0; i < nobbins.maxMonsterNumber; i++) {
+				if ((Math.abs(nobbins.monsterX[i] - digger.diggerX) < 20
+						&& Math.abs(nobbins.monsterY[i] - digger.diggerY) < 20) 
+						|| (screenData[(digger.diggerY/20)-1][digger.diggerX/20] %7==0)){
 					dyingNr++;
 					cherrieRespawn = true;
 
-					for (int j = 0; j < 5; j++) {
+					for (int j = 0; j < nobbins.maxMonsterNumber; j++) {
 
 						nobbins.monsterX[j] = 780;
 						nobbins.monsterY[j] = 20;
@@ -508,7 +610,7 @@ public class Map {
 					digger.fireBallY = 540;
 					nobbins.k = 1;
 
-				}
+				
 
 			}
 		}
@@ -516,7 +618,7 @@ public class Map {
 
 	private boolean killMonster() {
 
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < nobbins.maxMonsterNumber; i++) {
 
 			if (Math.abs(digger.fireBallX - nobbins.monsterX[i]) < 30
 					&& Math.abs(digger.fireBallY - nobbins.monsterY[i]) < 30) {
@@ -524,7 +626,7 @@ public class Map {
 
 				if (cherrie < 3) {
 					cherrie++;
-					System.out.println(cherrie);
+//					System.out.println(cherrie);
 
 				}
 
@@ -546,10 +648,325 @@ public class Map {
 			}
 
 		}
+		
+		  for(int i=0 ; i<5;i++){
+		      
+			  if(screenData[(nobbins.monsterY[i]/20)-1][nobbins.monsterX[i]/20] %7== 0)
+			  {
+			  score.score +=50;
+
+			  nobbins.monsterX[i]= 760;
+			  nobbins.monsterY[i] =20;
+			  
+			  
+			  return true;
+			  }
+		  }
 
 		return false;
 
 	}
+	
+	private boolean goDown1=false,nugEat1=false,finaleBroke1=false;
+	private int nugX1,nugY1,broke1=0;
+
+	 
+	 
+	  private void goldNuggetGoDown1()
+	  {
+	  for(int i=0 ; i<30;i++){
+	  for(int j=0 ; j<40;j++)
+	  
+	  {
+	  if(screenData[i][j]==7 && screenData[i+1][j]%2==0  )
+	  {
+	  
+	  nugX1=j;
+	  nugY1=i;
+	  goDown1=true;
+	  break;
+	  
+	  
+	  
+	  }
+	  if(goDown1==true)
+	  {
+	  break;
+	  }
+	 }
+	  }
+	  if(goDown1==true && screenData[nugY1+1][nugX1]%2==0){
+	      dying();
+	      killMonster();
+	    if(finaleBroke1!=true) { 
+	  screenData[nugY1][nugX1]=8;
+	  screenData[nugY1+1][nugX1]=7;
+	    }else
+	    {
+	  screenData[nugY1][nugX1]=8;
+	   
+	    }  
+	  broke1+=1;
+	  nugY1++;
+	  
+	  }
+	  
+	  if(broke1>1 && screenData[nugY1+1][nugX1]%2!=0&&nugEat1==false )
+	  {
+	   if(broke1>=2 )
+	       finaleBroke1=true;
+	  screenData[nugY1][nugX1]=9;
+	  }
+	  if(screenData[digger.diggerY/20][digger.diggerX/20]==9 && nugEat1==false){
+	      score.score+=100;
+	    
+	     
+	      nugEat1=true;
+	  }else if(nugEat1==true)
+	  {
+	  screenData[(digger.diggerY/20)][digger.diggerX/20]=2;
+	  
+	  }
+	 
+	  }
+	private boolean goDown2=false,nugEat2=false,finaleBroke2=false;
+	private int nugX2,nugY2,broke2=0;
+
+	 
+	 
+	 private void goldNuggetGoDown2()
+	{
+	for(int i=0 ; i<30;i++){
+	for(int j=0 ; j<40;j++)
+
+	{
+	if(screenData[i][j]==21 && screenData[i+1][j]%2==0 )
+	{
+
+	nugX2=j;
+	nugY2=i;
+	goDown2=true;
+
+	break;
+
+
+
+	}
+
+	}
+	}
+	if(goDown2==true && screenData[nugY2+1][nugX2]%2==0){
+	    dying();
+	    killMonster();
+	  if(finaleBroke2!=true)
+	  {
+	screenData[nugY2][nugX2]=8;
+	screenData[nugY2+1][nugX2]=21;
+	  }
+	  else
+	   screenData[nugY2][nugX2]=8;   
+	broke2+=1;
+	nugY2++;
+
+	}
+
+	if(broke2>1 && screenData[nugY2+1][nugX2]%2!=0 && nugEat2==false )
+	{
+	    if(broke2>=2 )
+	     finaleBroke2=true;
+	screenData[nugY2][nugX2]=27;
+	}
+	if(screenData[digger.diggerY/20][digger.diggerX/20]==27 && nugEat2==false ){
+	score.score+=100;
+
+
+	nugEat2=true;
+	}else if(nugEat2==true)
+	{
+	screenData[(digger.diggerY/20)][digger.diggerX/20]=2;
+
+	}
+
+	}
+	 
+	 
+	private boolean goDown3=false,nugEat3=false,finaleBroke3=false;
+	private int nugX3,nugY3,broke3=0;
+
+	 
+	 
+	  private void goldNuggetGoDown3()
+	  {
+	  for(int i=0 ; i<30;i++){
+	  for(int j=0 ; j<40;j++)
+	  
+	  {
+	  if(screenData[i][j]==35 && screenData[i+1][j]%2==0 )
+	  {
+	  
+	  nugX3=j;
+	  nugY3=i;
+	  goDown3=true;
+	  break;
+	  
+	  
+	  
+	  }
+	  
+	 }
+	  }
+	  if(goDown3==true && screenData[nugY3+1][nugX3]%2==0){
+	      dying();
+	      killMonster();
+	      if(finaleBroke3!=true)
+	      {
+	  screenData[nugY3][nugX3]=8;
+	  screenData[nugY3+1][nugX3]=35;
+	      }
+	      else
+	       screenData[nugY3][nugX3]=8;   
+	  broke3+=1;
+	  nugY3++;
+	  
+	  }
+	  
+	  if(broke3>1 && screenData[nugY3+1][nugX3]%2!=0&&nugEat3==false )
+	  {if(broke3>=2)
+	      finaleBroke3=true;
+	  screenData[nugY3][nugX3]=45;
+	  }
+	  if(screenData[digger.diggerY/20][digger.diggerX/20]==45 && nugEat3==false){
+	      score.score+=100;
+	    
+	     
+	      nugEat3=true;
+	  }else if(nugEat3==true)
+	  {
+	  screenData[(digger.diggerY/20)][digger.diggerX/20]=2;
+	  
+	  }
+	 
+	  }
+	  
+	  private boolean goDown4=false,nugEat4=false,finaleBroke4=false;
+	private int nugX4,nugY4,broke4=0;
+
+	 
+	 
+	  private void goldNuggetGoDown4()
+	  {
+	  for(int i=0 ; i<30;i++){
+	  for(int j=0 ; j<40;j++)
+	  
+	  {
+	  if(screenData[i][j]==49 && screenData[i+1][j]%2==0 )
+	  {
+	  
+	  nugX4=j;
+	  nugY4=i;
+	  goDown4=true;
+	  break;
+	  
+	  
+	  
+	  }
+	  
+	 }
+	  }
+	  if(goDown4==true && screenData[nugY4+1][nugX4]%2==0){
+	      dying();
+	      killMonster();
+	   if(finaleBroke4!=true)
+	      {
+	  screenData[nugY4][nugX4]=8;
+	  screenData[nugY4+1][nugX4]=49;
+	      }
+	      else
+	       screenData[nugY4][nugX4]=8;
+	  broke4+=1;
+	  nugY4++;
+	  
+	  }
+	  
+	  if(broke4>1 && screenData[nugY4+1][nugX4]%2!=0&&nugEat4==false )
+	  {
+	    if(broke4>=2)
+	        finaleBroke4=true;
+	  screenData[nugY4][nugX4]=81;
+	  }
+	  if(screenData[digger.diggerY/20][digger.diggerX/20]==81 && nugEat4==false){
+	      score.score+=100;
+	    
+	     
+	      nugEat4=true;
+	  }else if(nugEat4==true)
+	  {
+	  screenData[(digger.diggerY/20)][digger.diggerX/20]=2;
+	  
+	  }
+	 
+	  }
+	  
+	private boolean goDown5=false,nugEat5=false,finaleBroke5=false;
+	private int nugX5,nugY5,broke5=0;
+
+	 
+	 
+	  private void goldNuggetGoDown5()
+	  {
+	  for(int i=0 ; i<30;i++){
+	  for(int j=0 ; j<40;j++)
+	  
+	  {
+	  if(screenData[i][j]==77 && screenData[i+1][j]%2==0 )
+	  {
+	  
+	  nugX5=j;
+	  nugY5=i;
+	  goDown5=true;
+	  break;
+	  
+	  
+	  
+	  }
+	  
+	 }
+	  }
+	  if(goDown5==true && screenData[nugY5+1][nugX5]%2==0){
+	      dying();
+	      killMonster();
+	      if(finaleBroke5!=true)
+	      {
+	  screenData[nugY5][nugX5]=8;
+	  screenData[nugY5+1][nugX5]=77;
+	      }
+	     else
+	         screenData[nugY5][nugX5]=8;  
+	  broke5+=1;
+	  nugY5++;
+	  
+	  }
+	  
+	  if(broke5>1 && screenData[nugY5+1][nugX5]%2!=0&&nugEat5==false )
+	  {
+	      if(broke5>=2)
+	      {
+	      finaleBroke5=true;
+	      }
+	  screenData[nugY5][nugX5]=99;
+	  }
+	  if(screenData[digger.diggerY/20][digger.diggerX/20]==99 && nugEat5==false){
+	      score.score+=100;
+	    
+	     
+	      nugEat5=true;
+	  }else if(nugEat5==true)
+	  {
+	  screenData[(digger.diggerY/20)][digger.diggerX/20]=2;
+	  
+	  }
+	 
+	  }
 
 	public Scene getScene() {
 		return s;

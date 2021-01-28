@@ -219,20 +219,15 @@ public class Digger {
 	public void changeImage(String direction) {
 		switch (direction) {
 		case "UP":
-//			currentImageOfDig = digUp1;
 			setImageUp();
-//			System.out.println("Changing Image to UP");
 			break;
 		case "DOWN":
-//			currentImageOfDig = digDown1;
 			setImageDown();
 			break;
 		case "RIGHT":
-//			currentImageOfDig = digRight1;
 			setImageRight();
 			break;
 		case "LEFT":
-//			currentImageOfDig = digLeft1;
 			setImageLeft();
 			break;
 
@@ -249,9 +244,7 @@ public class Digger {
 
 	public void draw(GraphicsContext gc) {
 		
-//		changeImage(dir);
-//		gc.drawImage(new Image(getClass().getResourceAsStream("/digger/gui/extend/diggerChar.jpg")), diggerX, diggerY,
-//				20, 20);
+
 			gc.drawImage(currentImageOfDig, diggerX, diggerY, 30, 30);
 
 	}

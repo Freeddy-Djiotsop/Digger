@@ -16,12 +16,14 @@ public class Controller extends Application {
 	static New_game_menu n_g_scene;
 	static Find_game_menu f_g_scene;
 	static Map map_1;
+	static GameOverScene g_o_scene;
 	
 	public Controller() throws Exception{
 		m_m_scene = new Main_menu();
 		n_g_scene = new New_game_menu();
 		f_g_scene = new Find_game_menu();
 		map_1 = new Map();
+		g_o_scene = new GameOverScene();
 	}
 
 	@Override
@@ -36,7 +38,6 @@ public class Controller extends Application {
 		window.show();
         map_1.getRoot().getChildren().add(map_1.canvas);
         map_1.getRoot().setFocusTraversable(true);
-        
         
 	}
 		
@@ -61,7 +62,13 @@ public class Controller extends Application {
     }
 	
 	public static void set_scene_map_scene() {
+		map_1.timer.start();
 		window.setScene(map_1.getScene());
+		window.show();
+	}
+	
+	public static void setSceneGameOver() {
+		window.setScene(g_o_scene.getScene());
 		window.show();
 	}
 

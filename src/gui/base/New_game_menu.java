@@ -44,7 +44,6 @@ public class New_game_menu {
 			buttons.get(2).setTranslateX(300);
 			buttons.get(2).setTranslateY(390);
 			buttons.get(2).setOnAction(e -> Controller.set_scene_main_menu());
-			//buttons.get(0).setOnAction(e -> Controller.set_scene_in_game());
 			buttons.get(0).setOnAction(e -> Controller.set_scene_map_scene());
 			
 		}
