@@ -6,15 +6,15 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class Image_button extends Button {
+public class ImageButton extends Button {
 
     final ImageView iv;
     final Image image, image1;
 
-    public Image_button(String pressed, String n_pressed) throws IOException {
+    public ImageButton(String pressed, String nPressed) throws IOException {
 
         image = new Image(getClass().getResourceAsStream(pressed));
-        image1 = new Image(getClass().getResourceAsStream(n_pressed));
+        image1 = new Image(getClass().getResourceAsStream(nPressed));
         iv = new ImageView();
         this.setGraphic(iv);
         iv.imageProperty().bind(Bindings.when(this.pressedProperty()).then(image).otherwise(image1));
@@ -23,7 +23,7 @@ public class Image_button extends Button {
 
     }
 
-    public ImageView get_image_view() {
+    public ImageView getImageView() {
         return iv;
     }
 }

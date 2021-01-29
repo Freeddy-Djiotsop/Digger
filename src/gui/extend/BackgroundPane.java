@@ -7,15 +7,15 @@ import javafx.scene.layout.Pane;
 public class BackgroundPane extends Pane {
 	
 
-    final ImageView bg_img;
+    final ImageView bgImg;
 
     public BackgroundPane(String img) {
 
-        bg_img = new ImageView(new Image(getClass().getResourceAsStream(img)));
+    	bgImg = new ImageView(new Image(getClass().getResourceAsStream(img)));
 
-        bg_img.setFitWidth(800);
-        bg_img.setFitHeight(600);
+    	bgImg.setFitWidth(800);
+    	bgImg.setFitHeight(600);
 
-        this.getChildren().add(bg_img);
+        this.getChildren().add(bgImg);
     }
 }

@@ -5,19 +5,24 @@ import java.util.ArrayList;
 
 import digger.gui.controller.Controller;
 import digger.gui.extend.BackgroundPane;
-import digger.gui.extend.Image_button;
+import digger.gui.extend.ImageButton;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 
+/**
+ * @see Controller, Map
+ * @author Afraa Habbab
+ *
+ */
 public class GameOverScene {
 	private Scene scene;
 	private BackgroundPane pane;
-	private ArrayList<Image_button> buttons;
+	private ArrayList<ImageButton> buttons;
 	
 	public GameOverScene() throws IOException {
 		pane = new BackgroundPane("/digger/gui/extend/GameOver.jpg");
 		try {
-			new_button();
+			newButton();
 		}catch (IOException ex2) {
 			ex2.printStackTrace();
 		}
@@ -26,32 +31,32 @@ public class GameOverScene {
 		pane.getChildren().addAll(buttons);
 	}
 	
-	private void new_button() throws IOException{
-		buttons = new ArrayList<Image_button>();
+	private void newButton() throws IOException{
+		buttons = new ArrayList<ImageButton>();
 		
 		/**
          * button[0] : new game option
-         * button[1] : creating a new game option
-         * button[2] : searching for a game option
-         * button[3] : game manual(original digger instructions)
-         * button[4] : exit the game
+         * button[1] : go back to main menu
+         * button[2] : Exit the game
          */
-		buttons.add(0, new Image_button(("/digger/gui/extend/New_game.jpg"),
-				("/digger/gui/extend/New_game1.jpg")));
-		buttons.get(0).setTranslateX(250);
+		buttons.add(0, new ImageButton(("/digger/gui/extend/NewGame.jpg"),
+				("/digger/gui/extend/NewGame1.jpg")));
+		buttons.get(0).setTranslateX(450);
 		buttons.get(0).setTranslateY(160);
-		buttons.add(1, new Image_button(("/digger/gui/extend/ReturnToMainMenu.jpg"),
+		buttons.add(1, new ImageButton(("/digger/gui/extend/ReturnToMainMenu.jpg"),
 				("/digger/gui/extend/ReturnToMainMenu1.jpg")));
-		buttons.get(1).setTranslateX(260);
-		buttons.get(1).setTranslateY(215);
-		buttons.add(2, new Image_button(("/digger/gui/extend/Exit.jpg"),
+		buttons.get(1).setTranslateX(330);
+		buttons.get(1).setTranslateY(315);
+		buttons.add(2, new ImageButton(("/digger/gui/extend/Exit.jpg"),
 				("/digger/gui/extend/Exit1.jpg")));
-		buttons.get(2).setTranslateX(255);
-		buttons.get(2).setTranslateY(270);
+		buttons.get(2).setTranslateX(500);
+		buttons.get(2).setTranslateY(470);
 		
-		
-		buttons.get(0).setOnAction(e -> Controller.set_scene_new_game_menu());
-		buttons.get(1).setOnAction(e -> Controller.set_scene_main_menu());
+		/*
+		 * buttons functionality
+		 */
+		buttons.get(0).setOnAction(e -> Controller.setSceneNewGameMenu());
+		buttons.get(1).setOnAction(e -> Controller.setSceneMainMenu());
 		buttons.get(2).setOnAction(e -> Platform.exit());
 		
 	}

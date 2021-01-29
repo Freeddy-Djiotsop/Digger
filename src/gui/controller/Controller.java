@@ -12,18 +12,18 @@ import digger.logic.Map;
 public class Controller extends Application {
 	
 	static Stage window;
-	static Main_menu m_m_scene;
-	static New_game_menu n_g_scene;
-	static Find_game_menu f_g_scene;
-	static Map map_1;
-	static GameOverScene g_o_scene;
+	static MainMenu mMenuScene;
+	static NewGameMenu nGameScene;
+	static FindGameMenu fGameScene;
+	static Map map1;
+	static GameOverScene gOverScene;
 	
 	public Controller() throws Exception{
-		m_m_scene = new Main_menu();
-		n_g_scene = new New_game_menu();
-		f_g_scene = new Find_game_menu();
-		map_1 = new Map();
-		g_o_scene = new GameOverScene();
+		mMenuScene = new MainMenu();
+		nGameScene = new NewGameMenu();
+		fGameScene = new FindGameMenu();
+		map1 = new Map();
+		gOverScene = new GameOverScene();
 	}
 
 	@Override
@@ -32,12 +32,12 @@ public class Controller extends Application {
 		window = primaryStage;
 		window.setWidth(793);
 		window.setHeight(638);
-		window.setScene(m_m_scene.getScene());
+		window.setScene(mMenuScene.getScene());
 		window.setTitle("Digger");
 		window.getIcons().add(new Image(getClass().getResourceAsStream("/digger/gui/extend/diggerIcon.jpg")));
 		window.show();
-        map_1.getRoot().getChildren().add(map_1.canvas);
-        map_1.getRoot().setFocusTraversable(true);
+        map1.getRoot().getChildren().add(map1.canvas);
+        map1.getRoot().setFocusTraversable(true);
         
 	}
 		
@@ -46,30 +46,40 @@ public class Controller extends Application {
 	
 	
 	
-	public static void set_scene_new_game_menu() {
-        window.setScene(n_g_scene.getScene());
+	public static void setSceneNewGameMenu() {
+        window.setScene(nGameScene.getScene());
         window.show();
     }
 	
-	public static void set_scene_main_menu() {
-        window.setScene(m_m_scene.getScene());
+	public static void setSceneMainMenu() {
+        window.setScene(mMenuScene.getScene());
         window.show();
     }
 	
-	public static void set_scene_find_game_menu() {
-        window.setScene(f_g_scene.getScene());
+	public static void setSceneFindGameMenu() {
+        window.setScene(fGameScene.getScene());
         window.show();
     }
 	
-	public static void set_scene_map_scene() {
-		map_1.timer.start();
-		window.setScene(map_1.getScene());
+	public static void setSceneMap() {
+		map1.timer.start();
+        
+        if(map1.getRoot().getChildren().isEmpty()) {
+        	map1.getRoot().getChildren().add(map1.canvas);
+        	map1.getRoot().setFocusTraversable(true);
+        }
+        
+		window.setScene(map1.getScene());
 		window.show();
 	}
-	
+
 	public static void setSceneGameOver() {
-		window.setScene(g_o_scene.getScene());
+		map1.timer.stop();
+		map1 = null;
+		map1 = new Map();
+		window.setScene(gOverScene.getScene());
 		window.show();
+		
 	}
 
 }

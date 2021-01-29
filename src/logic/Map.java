@@ -3,6 +3,8 @@ package digger.logic;
 import java.awt.Dimension;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import digger.gui.controller.Controller;
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -125,7 +127,7 @@ public class Map {
 					
 					   if(screenData[i][j]%7==0)
                        {
-						   gc.drawImage(new Image(getClass().getResourceAsStream("/digger/gui/extend/goldtransp.png")),
+						   gc.drawImage(new Image(getClass().getResourceAsStream("/digger/gui/extend/GoldBag.png")),
 									x , y , 20, 20);
 //                           gc.setFill(Color.PINK);
 //                           gc.fillOval(x, y, 20, 20);
@@ -134,7 +136,7 @@ public class Map {
                         if(screenData[i][j] %9 ==0)
                         {
                         	
-                        	gc.drawImage(new Image(getClass().getResourceAsStream("/digger/gui/extend/Gold3.jpg")),
+                        	gc.drawImage(new Image(getClass().getResourceAsStream("/digger/gui/extend/Gold.jpg")),
     								x , y , 20, 20);
 //                            gc.setFill(Color.PINK);
 //                            gc.fillOval(x, y, 10, 20);
@@ -150,7 +152,6 @@ public class Map {
 			digger.draw(gc);
 			if (fire == 0) {
 				digger.drawFireBall(gc);
-
 			}
 				for (int k = 0; k < nobbins.maxMonsterNumber; k++) {
 
@@ -173,8 +174,10 @@ public class Map {
 			score.drawScore(gc);
 			gc.drawImage(new Image(getClass().getResourceAsStream("/digger/gui/extend/Level01.jpg")), 350, 1, 100, 20);
 		} else {
-			gc.drawImage(new Image(getClass().getResourceAsStream("/digger/gui/extend/GameOver.jpg")), 0, 0, d.height,
-					d.width);
+//			gc.drawImage(new Image(getClass().getResourceAsStream("/digger/gui/extend/GameOver.jpg")), 0, 0, d.height,
+//					d.width);
+
+			Controller.setSceneGameOver();
 //       gc.setFill(Color.BLACK);
 //       gc.fillRect(0, 0, d.height, d.width);
 		}
@@ -595,7 +598,9 @@ public class Map {
 				if ((Math.abs(nobbins.monsterX[i] - digger.diggerX) < 20
 						&& Math.abs(nobbins.monsterY[i] - digger.diggerY) < 20) 
 						|| (screenData[(digger.diggerY/20)-1][digger.diggerX/20] %7==0)){
+
 					dyingNr++;
+
 					cherrieRespawn = true;
 
 					for (int j = 0; j < nobbins.maxMonsterNumber; j++) {
@@ -604,6 +609,10 @@ public class Map {
 						nobbins.monsterY[j] = 20;
 
 					}
+					digger.drawDead(gc);
+
+					delay(1000);
+
 					digger.diggerX = 400;
 					digger.fireBallX = 400;
 					digger.diggerY = 540;
@@ -613,6 +622,7 @@ public class Map {
 				
 
 			}
+
 		}
 	}
 
@@ -982,6 +992,10 @@ public class Map {
 
 	public void setRoot(Group root) {
 		this.root = root;
+	}
+	
+	@Override
+	public void finalize() {
 	}
 
 }

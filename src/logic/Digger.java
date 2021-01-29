@@ -35,6 +35,16 @@ public class Digger {
 	Image digLeft6;
 	Image currentImageOfDigLeft;
 	Image currentImageOfDig;
+	Image fireBall1;
+	Image fireBall2;
+	Image fireBall3;
+	Image currentImageOfFireBall;
+	Image DeadDig;
+	Image RIP1;
+	Image RIP2;
+	Image RIP3;
+	Image RIP4;
+	Image currentImg;
 	
 	String dir = "UP";
 
@@ -71,11 +81,21 @@ public class Digger {
 		digLeft6 = new Image(this.getClass().getResourceAsStream("/digger/gui/extend/DigLeft6.jpg"));
 		currentImageOfDigLeft = digLeft1;
 		currentImageOfDig = currentImageOfDigUp; 
+		fireBall1 = new Image(this.getClass().getResourceAsStream("/digger/gui/extend/FireBall1.png"));
+		fireBall2 = new Image(this.getClass().getResourceAsStream("/digger/gui/extend/FireBall2.png"));
+		fireBall3 = new Image(this.getClass().getResourceAsStream("/digger/gui/extend/FireBall3.png"));
+		currentImageOfFireBall = fireBall1;
+		DeadDig = new Image(this.getClass().getResourceAsStream("/digger/gui/extend/DeadDig.jpg"));
+		RIP1 = new Image(this.getClass().getResourceAsStream("/digger/gui/extend/RIP1.png"));
+		RIP2 = new Image(this.getClass().getResourceAsStream("/digger/gui/extend/RIP2.png"));
+		RIP3 = new Image(this.getClass().getResourceAsStream("/digger/gui/extend/RIP3.png"));
+		RIP4 = new Image(this.getClass().getResourceAsStream("/digger/gui/extend/RIP4.png"));
+		currentImg = DeadDig;
 
 	}
 	
-	public void setDir(String _dir) {
-		dir = _dir;
+	public void setDir(String dir1) {
+		dir = dir1;
 	}
 
 	
@@ -215,6 +235,43 @@ public class Digger {
 			return;
 		}
 	}
+	
+	public void setFireBallImage() {
+		
+		
+		if(currentImageOfFireBall.equals(fireBall1)) {
+			currentImageOfFireBall = fireBall2;
+			return;
+		}
+		if(currentImageOfFireBall.equals(fireBall2)) {
+			currentImageOfFireBall = fireBall3;
+			return;
+		}
+		if(currentImageOfFireBall.equals(fireBall3)) {
+			currentImageOfFireBall = fireBall1;
+			return;
+		}
+
+	}
+	
+	public void setDeadImg() {
+		if(currentImg.equals(DeadDig)) {
+			currentImg = RIP1;
+			return;
+		}
+		if(currentImg.equals(RIP1)) {
+			currentImg = RIP2;
+			return;
+		}
+		if(currentImg.equals(RIP2)) {
+			currentImg = RIP3;
+			return;
+		}
+		if(currentImg.equals(RIP3)) {
+			currentImg = RIP4;
+			return;
+		}
+	}
 
 	public void changeImage(String direction) {
 		switch (direction) {
@@ -236,8 +293,11 @@ public class Digger {
 	public void drawFireBall(GraphicsContext gc )
     {
      
-        gc.setFill(Color.BLUE);
-        gc.fillOval(fireBallX,fireBallY , 15, 15);
+//        gc.setFill(Color.BLUE);
+//        gc.fillOval(fireBallX,fireBallY , 15, 15);
+		setFireBallImage();
+		gc.drawImage(currentImageOfFireBall, fireBallX, fireBallY + 5, 20, 20);
+
     
     
     }
@@ -248,8 +308,9 @@ public class Digger {
 			gc.drawImage(currentImageOfDig, diggerX, diggerY, 30, 30);
 
 	}
-//	public void drawDead(GraphicsContext gc) {
-//		gc.drawImage(new Image(getClass().getResourceAsStream("/digger/gui/extend/DeadDig.jpg")), diggerX, diggerY, 30, 30);
-//
-//	}
+	public void drawDead(GraphicsContext gc) {
+		setDeadImg();
+		gc.drawImage(currentImg, diggerX, diggerY, 30, 30);
+  
+	}
 }
