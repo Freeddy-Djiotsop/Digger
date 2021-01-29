@@ -315,13 +315,9 @@ public class Nobbins extends Monster {
 				}
 
 			} else {
-				if (monsterX[rand] == 0 && monsterY[rand] == 0)
-			    {
-			      monsterX[rand] = 0; 
-			      monsterY[rand] = 0;
-			    }   
+			 
 
-				else if (digger.diggerX < monsterX[rand]) {
+                                  if (digger.diggerX < monsterX[rand]) {
 					screenData[monsterY[rand] / 20][(monsterX[rand] / 20)] = 6;
 					monsterX[rand] -= 20;
 					changeHobImage("Left");

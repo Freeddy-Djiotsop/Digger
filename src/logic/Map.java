@@ -201,7 +201,7 @@ public class Map {
 //			gc.fillOval(750, 27, 10, 10);
 			gc.drawImage(new Image(getClass().getResourceAsStream("/digger/gui/extend/Cherry.jpg")), 750, 27, 20, 20);
 //			System.out.println("Here we are agaian");
-			nobbins.timeline2.pause();
+			
 		}
 		if (digger.diggerX / 20 == 37 && digger.diggerY / 20 == 1 && cherrieEat == false) {
 			gc.setFill(Color.BLACK);
@@ -592,6 +592,11 @@ public class Map {
 		}
 
 	}
+	public Timeline timeline5 = new Timeline(new KeyFrame(Duration.seconds(5), ev -> {
+
+
+
+	}));       
 
 	private void dying() {
 			for (int i = 0; i < nobbins.maxMonsterNumber; i++) {
@@ -640,18 +645,13 @@ public class Map {
 
 				}
 
-				if (cherrie != 3) {
+			
 					nobbins.monsterX[i] = 780;
 					nobbins.monsterY[i] = 20;
 					monsterRespawnOn = true;
-				}
+				
 
-				else {
-
-					nobbins.monsterX[i] = 0;
-					nobbins.monsterY[i] = 0;
-
-				}
+			
 
 				return true;
 
