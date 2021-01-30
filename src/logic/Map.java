@@ -14,6 +14,8 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
@@ -71,15 +73,23 @@ public class Map {
 	public boolean monsterRespawnOn = true;
 	public boolean cherrieEat = false;
 	public boolean lastRound = false;
+        public ResourceManager resourceManager = new ResourceManager();
 
 	public Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), ev -> { // für fireball
 
 		go = true;
 
 	}));
+        
+        public SaveData  saveData;  
+        public MediaPlayer mediaPlayer;
+        public Media musicFile;
 
 	public Map() {
-
+                
+                musicFile= new Media("file:///C:/Users/ghait/Documents/NetBeansProjects/DiggerSpiel2/Music/Digger.wav");
+                mediaPlayer = new MediaPlayer(musicFile);
+               
 		initVariables();
 		initLevel();
 		drawMap(gc);
@@ -87,6 +97,8 @@ public class Map {
 //		timer.start();
 
 	}
+      
+	
 
 	private void initVariables() {
 		screenData = new int[30][40]; // wir haben 30 zeile und 30 spalte in der Karte d.h. , dass jede zeile hat 30
@@ -223,12 +235,64 @@ public class Map {
 
 	}
 
+        
+        public void loadGame()
+        {
+           try {
+                                SaveData data =(SaveData)resourceManager.load("1.save");
+                                screenData=data.screenDataCurrent;
+                                dyingNr=data.dyingNrCurrent;
+                                score.score=data.scoreCurrent;
+                                nobbins.monsterX=data.monsterXCurrent;
+                                nobbins.monsterY=data.monsterYCurrent;
+                                digger.diggerX=data.diggerXCurrent;
+                                digger.diggerY=data.diggerYCurrent;
+                            
+                            } catch (Exception e) {
+                                System.out.println("Couldn't load save Data" + e.getMessage());
+                            }
+        }
+        public int mediaPlayerOn=0;
+       
 	public void diggerMove() {
 
 		s.setOnKeyPressed((KeyEvent event) -> {
 
 			switch (event.getCode()) {
+                            case ENTER:{
+                             saveData= new SaveData (screenData,score.score,dyingNr,nobbins.monsterX,nobbins.monsterY,digger.diggerX,digger.diggerY) ;
+                            try{
+                                System.out.println(" saved" );
+                                resourceManager.save(saveData, "1.save");
+                            }
+                            catch (Exception e) {
+                            System.out.println("Couldn't save" + e.getMessage());
+                            }
+                            break;
+                            }
+                            
+                            case F7:
+                            {
+                                if(mediaPlayerOn %2==0)
+                                {
+                            mediaPlayer.stop();
+                            mediaPlayerOn++;
+                                }
+                                else
+                                {
+                                
+                                }
+                            
+                            break;
+                            
+                            }
+                            case S:{
+                            
+                            timer.stop();
+                            break;
+                            }    
 			case UP: {
+                            timer.start();
 				digger.changeImage("UP");
 				up = true;
 				down = false;
@@ -265,6 +329,7 @@ public class Map {
 				}
 			}
 			case DOWN: {
+                            timer.start();
 				digger.changeImage("DOWN");
 				up = false;
 				down = true;
@@ -299,6 +364,7 @@ public class Map {
 				}
 			}
 			case LEFT: {
+                            timer.start();
 				digger.changeImage("LEFT");
 				up = false;
 				down = false;
@@ -376,6 +442,7 @@ public class Map {
 				}
 			}
 			case RIGHT: {
+                            timer.start();
 				digger.changeImage("RIGHT");
 				up = false;
 				down = false;

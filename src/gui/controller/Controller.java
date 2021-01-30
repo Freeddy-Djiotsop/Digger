@@ -4,8 +4,8 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import digger.gui.base.*;
 import digger.logic.Map;
-/**
- * @author Afraa Habbab
+
+/* @author Afraa Habbab
  *
  */
 
@@ -28,7 +28,7 @@ public class Controller extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-
+             
 		window = primaryStage;
 		window.setWidth(793);
 		window.setHeight(638);
@@ -44,7 +44,14 @@ public class Controller extends Application {
 	
 
 	
-	
+public static void setSceneResumeGame(){
+map1.loadGame();
+window.setScene(map1.getScene());
+map1.timer.start();
+map1. mediaPlayer.setAutoPlay(true);
+window.show();
+
+}
 	
 	public static void setSceneNewGameMenu() {
         window.setScene(nGameScene.getScene());
@@ -68,8 +75,9 @@ public class Controller extends Application {
         	map1.getRoot().getChildren().add(map1.canvas);
         	map1.getRoot().setFocusTraversable(true);
         }
-        
+                
 		window.setScene(map1.getScene());
+                map1. mediaPlayer.setAutoPlay(true);
 		window.show();
 	}
 
@@ -77,6 +85,7 @@ public class Controller extends Application {
 		map1.timer.stop();
 		map1 = null;
 		map1 = new Map();
+                
 		window.setScene(gOverScene.getScene());
 		window.show();
 		

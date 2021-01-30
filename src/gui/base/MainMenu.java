@@ -72,6 +72,7 @@ public class MainMenu {
 		/**
 		 * buttons functionality
 		 */
+                buttons.get(0).setOnAction(e -> Controller.setSceneResumeGame());
 		buttons.get(1).setOnAction(e -> Controller.setSceneNewGameMenu());
 		buttons.get(2).setOnAction(e -> Controller.setSceneFindGameMenu());
 		buttons.get(3).setOnAction(e -> {
