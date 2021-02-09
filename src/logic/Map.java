@@ -3,13 +3,9 @@ package digger.logic;
 import java.awt.Dimension;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import digger.gui.controller.Controller;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -36,6 +32,17 @@ public class Map {
 	private final int blockSize = 30;
 	private final int nBlock = 40;
 	private final int screenSize = nBlock * blockSize;
+        public boolean goDown1=false,nugEat1=false,finaleBroke1=false;
+	public int nugX1,nugY1,broke1=0,counter=0;
+        private boolean goDown2=false,nugEat2=false,finaleBroke2=false;
+	private int nugX2,nugY2,broke2=0;
+        private boolean goDown3=false,nugEat3=false,finaleBroke3=false;
+	private int nugX3,nugY3,broke3=0;
+        private boolean goDown4=false,nugEat4=false,finaleBroke4=false;
+	private int nugX4,nugY4,broke4=0;
+        private boolean goDown5=false,nugEat5=false,finaleBroke5=false;
+	private int nugX5,nugY5,broke5=0;
+
 	private final int levelData[][] = {
 			    {3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3},
 			    {3,3,3,3,8,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,2,2,2,2,2,2,2,2,2,2},
@@ -126,7 +133,7 @@ public class Map {
         public boolean lData2;
 	public Map() {
                 
-                musicFile= new Media("file:///C:/Users/ghait/Documents/NetBeansProjects/DiggerSpiel2/Music/Digger.wav");
+                musicFile= new Media("file:///C:/Users/Aldemashki/Documents/NetBeansProjects/DiggerSpiel2/Music/Digger.wav");
                 mediaPlayer = new MediaPlayer(musicFile); 
                 
                 loadHighScore ();
@@ -365,7 +372,7 @@ public class Map {
 			gc.setFill(Color.BLACK);
 			gc.fillRect(740, 20, 20, 20);
 			digger.draw(gc);
-			score.score += 100;
+			score.score += 1000;
 			cherrie = 0;
 			cherrieEat = true;
 
@@ -433,7 +440,7 @@ public class Map {
                             break;
                             
                             }
-                            case S:{
+                            case SPACE:{
                             
                             timer.stop();
                             break;
@@ -467,7 +474,7 @@ public class Map {
 																						// Emeraldsstelle eintrifft,dann
 																						// erhöhe die Score
 
-						score.score += 50;
+						score.score += 25;
 					}
 					screenData[digger.diggerY / 20][digger.diggerX / 20] = 8; // Digger lässt in seiner Stelle Schwarze
 																				// Weg
@@ -502,7 +509,7 @@ public class Map {
 																						// Emeraldsstelle eintrifft,dann
 																						// erhöhe die Score
 
-						score.score += 50;
+						score.score += 25;
 					}
 					screenData[digger.diggerY / 20][digger.diggerX / 20] = 4; // Digger lässt in seiner Stelle Schwarze
 																				// Weg
@@ -577,7 +584,7 @@ public class Map {
 																						// Emeraldsstelle eintrifft,dann
 																						// erhöhe die Score
 
-						score.score += 50;
+						score.score += 25;
 					}
 					screenData[digger.diggerY / 20][digger.diggerX / 20] = 2; // Digger lässt in seiner Stelle Schwarze
 																				// Weg
@@ -601,16 +608,16 @@ public class Map {
 						digger.fireBallX = digger.diggerX;
 					break;
 				} else {
-//					digger.diggerX += 20;
-//					if (active == false)
-//						digger.fireBallX = digger.diggerX;
-//					if (screenData[digger.diggerY / 20][digger.diggerX / 20] == 5) { // hier bedeutet wenn Digger
-//																						// Emeraldsstelle eintrifft,dann
-//																						// erhöhe die Score
-//
-//						score.score += 50;
-//					}
-//					screenData[digger.diggerY / 20][digger.diggerX / 20] = 6; // Digger lässt in seiner Stelle Schwarze
+					digger.diggerX += 20;
+					if (active == false)
+						digger.fireBallX = digger.diggerX;
+					if (screenData[digger.diggerY / 20][digger.diggerX / 20] == 5) { // hier bedeutet wenn Digger
+																						// Emeraldsstelle eintrifft,dann
+																						// erhöhe die Score
+
+						score.score += 25;
+					}
+					screenData[digger.diggerY / 20][digger.diggerX / 20] = 6; // Digger lässt in seiner Stelle Schwarze
 					if(screenData[digger.diggerY/20][(digger.diggerX/20)+1]%7==0)
                     {
                  if(screenData[digger.diggerY/20][(digger.diggerX/20)+1]==7  &&  screenData[digger.diggerY/20][(digger.diggerX/20)+2]%7!=0)
@@ -685,7 +692,7 @@ public class Map {
 
 				switch (event.getCode()) {
 
-				case SPACE: {
+				case F1: {
 					fire = 0;
 					go = false;
 					active = true;
@@ -816,8 +823,7 @@ public class Map {
 	public void dying() {
 			for (int i = 0; i < nobbins.maxMonsterNumber; i++) {
 				if ((Math.abs(nobbins.monsterX[i] - digger.diggerX) < 20
-						&& Math.abs(nobbins.monsterY[i] - digger.diggerY) < 20) 
-						|| (screenData[(digger.diggerY/20)-1][digger.diggerX/20] %7==0)){
+						&& Math.abs(nobbins.monsterY[i] - digger.diggerY) < 20) ){
 
 					dyingNr++;
 
@@ -852,7 +858,7 @@ public class Map {
 
 			if (Math.abs(digger.fireBallX - nobbins.monsterX[i]) < 30
 					&& Math.abs(digger.fireBallY - nobbins.monsterY[i]) < 30) {
-				score.score += 50;
+				score.score += 250;
 
 				if (cherrie < 3) {
 					cherrie++;
@@ -892,81 +898,65 @@ public class Map {
 
 	}
 	
-	public boolean goDown1=false,nugEat1=false,finaleBroke1=false;
-	public int nugX1,nugY1,broke1=0,counter=0;
-        public ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
-	public GoldDelay goldDelay = new GoldDelay(counter);
+
+    
 	 
       
 	  private void goldNuggetGoDown1()
-	  {
-              counter=goldDelay.getCounter();
-	  for(int i=0 ; i<30;i++){
-	  for(int j=0 ; j<40;j++)
-	  
-	  {
-	  if(screenData[i][j]==7 && screenData[i+1][j]%2==0  )
-	  {
-	  
-	  nugX1=j;
-	  nugY1=i;
-	  goDown1=true;
-	  break;
-	  
-	  
-	  
-	  }
-	  if(goDown1==true)
-	  {
-	  break;
-	  }
-	 }
-	  }
-	  if(goDown1==true && screenData[nugY1+1][nugX1]%2==0 ){
-              if(counter==0){
-              
-              scheduledExecutorService.schedule(goldDelay ,1,TimeUnit.SECONDS);
-              
-              
-              }
-              else{
-            scheduledExecutorService.shutdown();
-            //dying();
-	    killMonster();
-                if(finaleBroke1!=true) { 
-	  screenData[nugY1][nugX1]=8;
-	  screenData[nugY1+1][nugX1]=7;
-	    }else
-	    {
-	  screenData[nugY1][nugX1]=8;
-	   
-	    }  
-	  broke1+=1;
-	  nugY1++;
-              
-              }
-	  }
-	  
-	  if(broke1>1 && screenData[nugY1+1][nugX1]%2!=0&&nugEat1==false )
-	  {
-	   if(broke1>=2 )
-	       finaleBroke1=true;
-	  screenData[nugY1][nugX1]=9;
-	  }
-	  if(screenData[digger.diggerY/20][digger.diggerX/20]==9 && nugEat1==false){
-	      score.score+=100;
-	    
-	     
-	      nugEat1=true;
-	  }else if(nugEat1==true)
-	  {
-	  screenData[(digger.diggerY/20)][digger.diggerX/20]=2;
-	  
-	  }
+	{
+	for(int i=0 ; i<30;i++){
+	for(int j=0 ; j<40;j++)
+
+	{
+	if(screenData[i][j]==21 && screenData[i+1][j]%2==0 )
+	{
+
+	nugX1=j;
+	nugY1=i;
+	goDown1=true;
+
+	break;
+
+
+
+	}
+
+	}
+	}
+	if(goDown1==true && screenData[nugY1+1][nugX1]%2==0){
 	 
+	    killMonster();
+	  if(finaleBroke1!=true)
+	  {
+	screenData[nugY1][nugX1]=8;
+	screenData[nugY1+1][nugX1]=21;
 	  }
-	private boolean goDown2=false,nugEat2=false,finaleBroke2=false;
-	private int nugX2,nugY2,broke2=0;
+	  else
+	   screenData[nugY1][nugX1]=8;   
+	broke1+=1;
+	nugY1++;
+
+	}
+
+	if(broke1>1 && screenData[nugY1+1][nugX1]%2!=0 && nugEat1==false )
+	{
+	    if(broke1>=2 )
+	     finaleBroke1=true;
+	screenData[nugY1][nugX1]=27;
+	}
+	if(screenData[digger.diggerY/20][digger.diggerX/20]==27 && nugEat1==false ){
+	score.score+=500;
+
+
+	nugEat1=true;
+	}else if(nugEat1==true)
+	{
+	screenData[(digger.diggerY/20)][digger.diggerX/20]=2;
+
+	}
+
+	}
+
 
 	 
 	 
@@ -992,7 +982,7 @@ public class Map {
 	}
 	}
 	if(goDown2==true && screenData[nugY2+1][nugX2]%2==0){
-	    //dying();
+	 
 	    killMonster();
 	  if(finaleBroke2!=true)
 	  {
@@ -1013,7 +1003,7 @@ public class Map {
 	screenData[nugY2][nugX2]=27;
 	}
 	if(screenData[digger.diggerY/20][digger.diggerX/20]==27 && nugEat2==false ){
-	score.score+=100;
+	score.score+=500;
 
 
 	nugEat2=true;
@@ -1026,8 +1016,7 @@ public class Map {
 	}
 	 
 	 
-	private boolean goDown3=false,nugEat3=false,finaleBroke3=false;
-	private int nugX3,nugY3,broke3=0;
+
 
 	 
 	 
@@ -1052,7 +1041,7 @@ public class Map {
 	 }
 	  }
 	  if(goDown3==true && screenData[nugY3+1][nugX3]%2==0){
-	      //dying();
+	     
 	      killMonster();
 	      if(finaleBroke3!=true)
 	      {
@@ -1072,7 +1061,7 @@ public class Map {
 	  screenData[nugY3][nugX3]=45;
 	  }
 	  if(screenData[digger.diggerY/20][digger.diggerX/20]==45 && nugEat3==false){
-	      score.score+=100;
+	      score.score+=500;
 	    
 	     
 	      nugEat3=true;
@@ -1084,8 +1073,6 @@ public class Map {
 	 
 	  }
 	  
-	  private boolean goDown4=false,nugEat4=false,finaleBroke4=false;
-	private int nugX4,nugY4,broke4=0;
 
 	 
 	 
@@ -1110,7 +1097,7 @@ public class Map {
 	 }
 	  }
 	  if(goDown4==true && screenData[nugY4+1][nugX4]%2==0){
-	      //dying();
+	   
 	      killMonster();
 	   if(finaleBroke4!=true)
 	      {
@@ -1131,7 +1118,7 @@ public class Map {
 	  screenData[nugY4][nugX4]=81;
 	  }
 	  if(screenData[digger.diggerY/20][digger.diggerX/20]==81 && nugEat4==false){
-	      score.score+=100;
+	      score.score+=500;
 	    
 	     
 	      nugEat4=true;
@@ -1143,8 +1130,7 @@ public class Map {
 	 
 	  }
 	  
-	private boolean goDown5=false,nugEat5=false,finaleBroke5=false;
-	private int nugX5,nugY5,broke5=0;
+
 
 	 
 	 
@@ -1169,7 +1155,7 @@ public class Map {
 	 }
 	  }
 	  if(goDown5==true && screenData[nugY5+1][nugX5]%2==0){
-	      //dying();
+	      
 	      killMonster();
 	      if(finaleBroke5!=true)
 	      {
@@ -1192,7 +1178,7 @@ public class Map {
 	  screenData[nugY5][nugX5]=99;
 	  }
 	  if(screenData[digger.diggerY/20][digger.diggerX/20]==99 && nugEat5==false){
-	      score.score+=100;
+	      score.score+=500;
 	    
 	     
 	      nugEat5=true;
